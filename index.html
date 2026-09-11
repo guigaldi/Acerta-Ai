@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Acerta Aí — Controle de Empréstimos, Festas, Eventos, Ingressos e Viagens</title>
+<meta name="description" content="Acerta Aí: controle empréstimos, festas, eventos, ingressos e viagens entre amigos, com acerto otimizado (menos pagamentos), vencimentos e cobrança por WhatsApp/PIX.">
+<meta name="theme-color" content="#0f172a">
+<!-- Compartilhamento (Open Graph) -->
+<meta property="og:title" content="Acerta Aí">
+<meta property="og:description" content="Controle de empréstimos, festas, eventos, ingressos e viagens entre amigos, com acerto otimizado.">
+<meta property="og:type" content="website">
+<!-- App na tela inicial (iOS/Android) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Acerta Aí">
+<!-- Ícone embutido (💸) — sem precisar de arquivo externo -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f172a'/%3E%3Ctext y='72' x='50' font-size='64' text-anchor='middle'%3E%F0%9F%92%B8%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f172a'/%3E%3Ctext y='72' x='50' font-size='64' text-anchor='middle'%3E%F0%9F%92%B8%3C/text%3E%3C/svg%3E">
+<!-- Manifesto PWA embutido -->
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Acerta%20A%C3%AD%22%2C%22short_name%22%3A%22Acerta%20A%C3%AD%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%230f172a%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%253D%25270%25200%2520100%2520100%2527%253E%253Crect%2520width%253D%2527100%2527%2520height%253D%2527100%2527%2520rx%253D%252722%2527%2520fill%253D%2527%25230f172a%2527%2F%253E%253Ctext%2520y%253D%252772%2527%2520x%253D%252750%2527%2520font-size%253D%252764%2527%2520text-anchor%253D%2527middle%2527%253E%25F0%259F%2592%25B8%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<style>
+  :root{
+    --bg:#0f172a; --card:#ffffff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+    --brand:#0ea5e9; --brand2:#0284c7; --green:#16a34a; --red:#dc2626; --amber:#d97706;
+    --soft:#f1f5f9; --shadow:0 6px 24px rgba(2,8,23,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    background:linear-gradient(180deg,#0f172a 0,#0f172a 220px,#f1f5f9 220px,#f1f5f9 100%);color:var(--ink)}
+  header{padding:22px 16px 10px;color:#fff;max-width:1100px;margin:0 auto}
+  header h1{margin:0;font-size:22px;font-weight:800;letter-spacing:.2px}
+  header p{margin:6px 0 0;color:#cbd5e1;font-size:13px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 0 4px;margin-top:6px}
+  .tab{white-space:nowrap;padding:10px 14px;border-radius:12px;border:none;background:#1e293b;color:#cbd5e1;
+    font-size:14px;font-weight:600;cursor:pointer}
+  .tab.active{background:#fff;color:var(--brand2);box-shadow:var(--shadow)}
+  .card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin:12px 0}
+  .card h2{margin:0 0 4px;font-size:17px}
+  .card .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+  label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.4px}
+  input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#fff;color:var(--ink)}
+  textarea{min-height:60px;resize:vertical}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row>*{flex:1;min-width:120px}
+  button.btn{border:none;border-radius:10px;padding:11px 16px;font-size:15px;font-weight:700;cursor:pointer;background:var(--brand);color:#fff}
+  button.btn:active{transform:scale(.98)}
+  button.btn.sec{background:var(--soft);color:var(--ink)}
+  button.btn.green{background:var(--green)}
+  button.btn.red{background:var(--red)}
+  button.btn.amber{background:var(--amber)}
+  button.btn.whats{background:#25d366}
+  button.mini{border:none;background:var(--soft);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+  button.mini.red{background:#fee2e2;color:#b91c1c}
+  button.mini.edit{background:#e0f2fe;color:#0369a1}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  .pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800}
+  .pos{color:var(--green)} .neg{color:var(--red)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;background:var(--soft);color:var(--muted)}
+  .tag.emprestimo{background:#ede9fe;color:#6d28d9}
+  .tag.festa{background:#ffe4e6;color:#be123c}
+  .tag.evento{background:#dbeafe;color:#1d4ed8}
+  .tag.ingresso{background:#dcfce7;color:#15803d}
+  .tag.viagem{background:#fef3c7;color:#b45309}
+  .empty{color:var(--muted);font-size:14px;text-align:center;padding:22px 0}
+  .prog{position:relative;height:22px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin:6px 0}
+  .prog>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;transition:width .4s;background:linear-gradient(90deg,#22c55e,#16a34a)}
+  .prog.full>i{background:linear-gradient(90deg,#16a34a,#15803d)}
+  .prog>span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0f172a;text-shadow:0 1px 2px rgba(255,255,255,.6)}
+  .prog.mini{height:14px;margin:4px 0}
+  .prog.mini>span{font-size:10px}
+  .proglegend{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-top:2px}
+  .proglegend .pg{color:var(--green)} .proglegend .pr{color:var(--brand2)}
+  .donutwrap{position:relative;width:160px;height:160px;flex:none}
+  .donutwrap .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .donutwrap .center b{font-size:26px;line-height:1;color:var(--green)}
+  .donutwrap .center span{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+  .donutleg{display:flex;flex-direction:column;gap:8px;font-size:14px}
+  .donutleg .li{display:flex;align-items:center;gap:8px;font-weight:700}
+  .donutleg .dot{width:14px;height:14px;border-radius:4px;flex:none}
+  .selo{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#16a34a,#15803d);color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:800;box-shadow:0 2px 8px rgba(22,163,74,.35)}
+  .card.quitado{border:2px solid #16a34a;background:linear-gradient(180deg,#f0fdf4,#ffffff)}
+  @keyframes selopulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .selo.novo{animation:selopulse 1.2s ease 2}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap}
+  .kpi .box{flex:1;min-width:150px;background:var(--soft);border-radius:12px;padding:12px}
+  .kpi .box b{display:block;font-size:22px;margin-top:2px}
+  .kpi .box span{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .flow{display:flex;align-items:center;gap:10px;padding:12px;border:1px dashed var(--line);border-radius:12px;margin:8px 0;background:#fafcff}
+  .flow .who{font-weight:800}
+  .arrow{color:var(--brand2);font-weight:800}
+  .amt{margin-left:auto;font-weight:800;color:var(--brand2);font-size:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{display:flex;align-items:center;gap:6px;background:var(--soft);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:600}
+  .chip input{width:16px;height:16px}
+  .split-line{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .split-line span{flex:1;font-size:14px}
+  .split-line input{width:110px;flex:none}
+  .hide{display:none}
+  .note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:8px}
+  .footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:20px}
+  details summary{cursor:pointer;font-weight:700;color:var(--brand2);margin-top:6px}
+  .alerta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-radius:12px;padding:12px 14px;margin:12px 0 0;font-size:14px;font-weight:600;box-shadow:var(--shadow)}
+  .alerta button{margin-left:auto}
+  .alerta-vermelho{background:#fef2f2;border:1px solid #fca5a5;color:#991b1b}
+  .alerta-laranja{background:#fff7ed;border:1px solid #fdba74;color:#9a3412}
+  .alerta-amarelo{background:#fefce8;border:1px solid #fde047;color:#854d0e}
+  .vencpill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800}
+  .venc-vencido{background:#fee2e2;color:#b91c1c}
+  .venc-hoje{background:#ffedd5;color:#c2410c}
+  .venc-proximo{background:#fef3c7;color:#b45309}
+  .venc-futuro{background:#e0f2fe;color:#0369a1}
+  .editando{border:2px solid var(--brand)!important;background:#f0f9ff!important}
+  .editbanner{background:#dbeafe;border:1px solid #93c5fd;color:#1e40af;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  /* Painel de filtros */
+  .filtros{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:14px;margin:6px 0 12px}
+  .filtros .fhead{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .filtros .fhead b{font-size:14px}
+  .filtros .fhead .cnt{margin-left:auto;font-size:12px;font-weight:800;color:var(--brand2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+  .filtros label{margin:0 0 4px}
+  .filtros select,.filtros input{background:#fff;width:100%}
+  .factions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .factions .btn{flex:1 1 auto;min-width:130px;text-align:center}
+  @media(max-width:560px){.hide-mob{display:none}
+    .factions .btn{flex:1 1 100%}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>💸 Acerta Aí</h1>
+  <p>Empréstimos • Festas • Eventos • Ingressos • Viagens — com acerto otimizado (menos pagamentos)</p>
+</header>
+
+<div class="wrap">
+  <div id="alertaVenc" class="hide"></div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="dash">📊 Resumo</button>
+    <button class="tab" data-tab="pessoas">👥 Pessoas</button>
+    <button class="tab" data-tab="gastos">🧾 Gastos/Eventos</button>
+    <button class="tab" data-tab="eventos">📁 Eventos</button>
+    <button class="tab" data-tab="pagamentos">✅ Pagamentos</button>
+    <button class="tab" data-tab="acerto">🔄 Acerto Otimizado</button>
+    <button class="tab" data-tab="cobrancas">📨 Cobranças</button>
+    <button class="tab" data-tab="dados">💾 Backup</button>
+  </div>
+
+  <!-- ===================== RESUMO ===================== -->
+  <section id="tab-dash">
+    <div class="card">
+      <h2>Panorama geral</h2>
+      <p class="sub">Saldo de cada pessoa considerando todos os gastos e os pagamentos já registrados.</p>
+      <div class="kpi" id="kpis"></div>
+    </div>
+    <div class="card">
+      <h2>💰 Pago x Em aberto</h2>
+      <p class="sub">Proporção geral do quanto já foi acertado em relação ao total devido.</p>
+      <div id="dashDonut" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center"></div>
+    </div>
+    <div class="card">
+      <h2>Saldo por pessoa</h2>
+      <p class="sub">Verde = tem a <b>receber</b>. Vermelho = ainda <b>deve</b>.</p>
+      <div id="dashSaldos"></div>
+    </div>
+    <div class="card">
+      <h2>📅 Vencimentos</h2>
+      <p class="sub">Cobranças em aberto por data de vencimento. Vermelho = vencido; amarelo = vence em até 7 dias.</p>
+      <div class="filtros">
+        <div class="fhead">🔎 <b>Filtros</b><span class="cnt" id="vcContador">todos</span></div>
+        <div class="fgrid">
+          <div><label>⏳ Situação</label>
+            <select id="vfStatus" onchange="renderVenc()">
+              <option value="">Todas</option>
+              <option value="vencido">🔴 Vencidos</option>
+              <option value="hoje">🟠 Vence hoje</option>
+              <option value="proximo">🟡 Em até 7 dias</option>
+              <option value="futuro">🔵 A vencer (+7 dias)</option>
+            </select>
+          </div>
+          <div><label>👤 Quem pagou</label>
+            <select id="vfPessoa" onchange="renderVenc()"><option value="">Todos</option></select>
+          </div>
+          <div><label>📁 Evento</label>
+            <select id="vfEvento" onchange="renderVenc()"><option value="">Todos os eventos</option></select>
+          </div>
+          <div><label>🏷️ Tipo</label>
+            <select id="vfTipo" onchange="renderVenc()">
+              <option value="">Todos os tipos</option>
+              <option value="emprestimo">Empréstimo</option>
+              <option value="festa">Festa</option>
+              <option value="evento">Evento</option>
+              <option value="ingresso">Ingresso</option>
+              <option value="viagem">Viagem</option>
+            </select>
+          </div>
+          <div><label>📅 De</label><input type="date" id="vfDe" onchange="renderVenc()"></div>
+          <div><label>📅 Até</label><input type="date" id="vfAte" onchange="renderVenc()"></div>
+        </div>
+        <div class="factions">
+          <button class="btn sec" onclick="limparFiltrosVenc()">🧹 Limpar</button>
+          <button class="btn amber" onclick="copiarVencimentos()">📋 Copiar</button>
+          <button class="btn" onclick="exportarVencimentosPDF()">📄 PDF</button>
+        </div>
+      </div>
+      <div id="vcResumo" class="note hide"></div>
+      <div id="dashVenc"></div>
+    </div>
+    <div class="card">
+      <h2>Total por tipo de evento</h2>
+      <div id="dashTipos"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PESSOAS ===================== -->
+  <section id="tab-pessoas" class="hide">
+    <div class="card" id="cardPessoa">
+      <div id="bannerPessoa" class="editbanner hide">✏️ Editando pessoa — <span></span><button class="mini" style="margin-left:auto" onclick="cancelarPessoa()">cancelar</button></div>
+      <h2 id="tituloPessoa">Adicionar pessoa</h2>
+      <p class="sub">Cadastre seus amigos. Você pode incluir WhatsApp e chave PIX para facilitar o acerto.</p>
+      <div class="row">
+        <div style="flex:2"><label>Nome</label><input id="pNome" placeholder="Ex.: João"></div>
+        <div style="flex:2"><label>WhatsApp (com DDD)</label><input id="pFone" placeholder="Ex.: (19) 99999-8888"></div>
+        <div style="flex:2"><label>Chave PIX (opcional)</label><input id="pPix" placeholder="CPF, e-mail, telefone ou aleatória"></div>
+        <div style="flex:0;display:flex;align-items:flex-end"><button class="btn" id="btnPessoa" onclick="salvarPessoa()">Adicionar</button></div>
+      </div>
+      <div class="note">📲 O telefone é usado para o botão <b>"Enviar no WhatsApp"</b> na aba Cobranças. A chave PIX aparece na mensagem para facilitar o pagamento.</div>
+    </div>
+    <div class="card">
+      <h2>Pessoas cadastradas</h2>
+      <div id="listaPessoas"></div>
+    </div>
+  </section>
+
+  <!-- ===================== GASTOS ===================== -->
+  <section id="tab-gastos" class="hide">
+    <div class="card" id="cardGasto">
+      <div id="bannerGasto" class="editbanner hide">✏️ Editando gasto — <span></span><button class="mini" style="margin-left:auto" onclick="cancelarGasto()">cancelar</button></div>
+      <h2 id="tituloGasto">Novo gasto / evento</h2>
+      <p class="sub">Informe quem pagou e entre quem foi dividido. O saldo de cada um é calculado automaticamente.</p>
+      <div class="row">
+        <div><label>Tipo</label>
+          <select id="gTipo">
+            <option value="emprestimo">Empréstimo</option>
+            <option value="festa">Festa</option>
+            <option value="evento">Evento</option>
+            <option value="ingresso">Ingresso</option>
+            <option value="viagem">Viagem</option>
+          </select>
+        </div>
+        <div style="flex:2"><label>Descrição</label><input id="gDesc" placeholder="Ex.: Ingressos do show / Feijoada / Airbnb"></div>
+        <div><label>Data do gasto</label><input type="date" id="gData"></div>
+        <div><label>Vencimento (opcional)</label><input type="date" id="gVenc"></div>
+      </div>
+      <div class="row">
+        <div style="flex:2"><label>Evento / Grupo (opcional)</label>
+          <select id="gEventoSel" onchange="onEventoSel()">
+            <option value="">— Sem evento (avulso) —</option>
+            <option value="__novo__">➕ Criar novo evento...</option>
+          </select>
+        </div>
+        <div style="flex:2" id="gEventoNovoBox" class="hide"><label>Nome do novo evento</label><input id="gEventoNovo" placeholder="Ex.: Viagem Serra Gaúcha, Aniversário do João"></div>
+      </div>
+      <div class="note">📁 Use o mesmo evento para agrupar vários gastos (ex.: hospedagem + ingressos + transporte de uma viagem). Veja tudo somado na aba <b>📁 Eventos</b>.</div>
+      <div class="row">
+        <div><label>Valor total (R$)</label><input type="number" id="gValor" step="0.01" placeholder="0,00" oninput="recalcSplit()"></div>
+        <div><label>Quem pagou</label><select id="gPagou"></select></div>
+        <div><label>Como dividir</label>
+          <select id="gModo" onchange="recalcSplit()">
+            <option value="igual">Igualmente entre os marcados</option>
+            <option value="custom">Valores personalizados</option>
+          </select>
+        </div>
+      </div>
+      <label>Participantes (quem consumiu / deve)</label>
+      <div class="chips" id="gPart"></div>
+      <div id="gSplitBox" class="hide">
+        <label>Valor por pessoa (R$)</label>
+        <div id="gSplitLines"></div>
+        <div class="note" id="gSplitAviso"></div>
+      </div>
+      <div style="margin-top:14px" class="row">
+        <div style="flex:0"><button class="btn green" id="btnGasto" onclick="salvarGasto()">Salvar gasto</button></div>
+        <div style="flex:0"><button class="btn sec" onclick="marcarTodos()">Marcar todos</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Gastos lançados</h2>
+      <div class="filtros">
+        <div class="fhead">🔎 <b>Filtros</b><span class="cnt" id="fContador">todos</span></div>
+        <div class="fgrid">
+          <div><label>👤 Pessoa</label>
+            <select id="fPessoa" onchange="renderGastos()"><option value="">Todas as pessoas</option></select>
+          </div>
+          <div><label>🎭 Papel</label>
+            <select id="fPapel" onchange="renderGastos()">
+              <option value="qualquer">Pagou ou participou</option>
+              <option value="pagou">Só quem pagou</option>
+              <option value="participou">Só quem participou</option>
+            </select>
+          </div>
+          <div><label>📁 Evento</label>
+            <select id="fEvento" onchange="renderGastos()"><option value="">Todos os eventos</option></select>
+          </div>
+          <div><label>🏷️ Tipo</label>
+            <select id="fTipo" onchange="renderGastos()">
+              <option value="">Todos os tipos</option>
+              <option value="emprestimo">Empréstimo</option>
+              <option value="festa">Festa</option>
+              <option value="evento">Evento</option>
+              <option value="ingresso">Ingresso</option>
+              <option value="viagem">Viagem</option>
+            </select>
+          </div>
+          <div><label>📅 De</label><input type="date" id="fDe" onchange="renderGastos()"></div>
+          <div><label>📅 Até</label><input type="date" id="fAte" onchange="renderGastos()"></div>
+        </div>
+        <div class="factions">
+          <button class="btn sec" onclick="limparFiltrosGastos()">🧹 Limpar</button>
+          <button class="btn amber" onclick="copiarGastosFiltrados()">📋 Copiar</button>
+          <button class="btn" onclick="exportarGastosPDF()">📄 PDF</button>
+        </div>
+      </div>
+      <div id="filtroResumo" class="note hide"></div>
+      <div id="listaGastos"></div>
+    </div>
+  </section>
+
+  <!-- ===================== EVENTOS ===================== -->
+  <section id="tab-eventos" class="hide">
+    <div class="card">
+      <h2>📁 Gastos agrupados por evento</h2>
+      <p class="sub">Cada evento reúne todos os gastos com o mesmo nome, com subtotal e quanto cada pessoa deve dentro dele.</p>
+      <div class="kpi" id="eventosKpi"></div>
+    </div>
+    <div id="listaEventos"></div>
+  </section>
+
+  <!-- ===================== PAGAMENTOS ===================== -->
+  <section id="tab-pagamentos" class="hide">
+    <div class="card" id="cardPagamento">
+      <div id="bannerPagamento" class="editbanner hide">✏️ Editando pagamento<button class="mini" style="margin-left:auto" onclick="cancelarPagamento()">cancelar</button></div>
+      <h2 id="tituloPagamento">Registrar pagamento recebido</h2>
+      <p class="sub">Sempre que alguém te pagar (ou pagar a outra pessoa), registre aqui para abater do saldo.</p>
+      <div class="row">
+        <div><label>Quem pagou</label><select id="mDe" onchange="onPagPessoa()"></select></div>
+        <div><label>Quem recebeu</label><select id="mPara"></select></div>
+        <div><label>Valor (R$)</label><input type="number" id="mValor" step="0.01" placeholder="0,00" oninput="onPagValor()"></div>
+      </div>
+      <div class="row">
+        <div><label>Data</label><input type="date" id="mData"></div>
+        <div><label>Frequência</label>
+          <select id="mFreq">
+            <option value="avulso">Avulso</option>
+            <option value="semanal">Parcela semanal</option>
+            <option value="mensal">Parcela mensal</option>
+          </select>
+        </div>
+        <div style="flex:2"><label>Como abater este pagamento?</label>
+          <select id="mModo" onchange="onPagModo()">
+            <option value="proporcional">⚖️ Proporcional (todos os gastos)</option>
+            <option value="evento">📁 De um evento específico</option>
+            <option value="gastos">🧾 De gastos específicos</option>
+          </select>
+        </div>
+      </div>
+      <div id="mEventoBox" class="hide"><label>Evento a abater</label><select id="mEvento"></select></div>
+      <div id="mGastosBox" class="hide">
+        <label>Marque os gastos que este pagamento quita (na ordem, até o valor do pagamento)</label>
+        <div class="chips" id="mGastosList"></div>
+        <div class="note" id="mGastosAviso"></div>
+      </div>
+      <div class="note" id="mModoAjuda">⚖️ <b>Proporcional:</b> o valor é distribuído entre todos os gastos da pessoa, na proporção de cada um. Abate o saldo geral e cada evento proporcionalmente.</div>
+      <div style="margin-top:12px"><button class="btn green" id="btnPagamento" onclick="salvarPagamento()">Registrar</button></div>
+    </div>
+
+    <div class="card">
+      <h2>Calculadora de parcelas</h2>
+      <p class="sub">Sugere quanto cada pessoa deve pagar por semana ou por mês para quitar o saldo.</p>
+      <div class="row">
+        <div><label>Pessoa</label><select id="cPessoa" onchange="calcParcela()"></select></div>
+        <div><label>Frequência</label><select id="cFreq" onchange="calcParcela()"><option value="semanal">Semanal</option><option value="mensal">Mensal</option></select></div>
+        <div><label>Nº de parcelas</label><input type="number" id="cN" value="4" min="1" oninput="calcParcela()"></div>
+        <div><label>OU valor por parcela (R$)</label><input type="number" id="cVal" step="0.01" placeholder="deixe vazio" oninput="calcParcela()"></div>
+      </div>
+      <div class="note" id="cResultado">Selecione uma pessoa que tenha saldo a pagar.</div>
+    </div>
+
+    <div class="card">
+      <h2>Histórico de pagamentos</h2>
+      <div class="filtros">
+        <div class="fhead">🔎 <b>Filtros</b><span class="cnt" id="pgContador">todos</span></div>
+        <div class="fgrid">
+          <div><label>👤 Quem pagou</label>
+            <select id="pfDe" onchange="renderPagamentos()"><option value="">Todos</option></select>
+          </div>
+          <div><label>🎯 Quem recebeu</label>
+            <select id="pfPara" onchange="renderPagamentos()"><option value="">Todos</option></select>
+          </div>
+          <div><label>💠 Abatimento</label>
+            <select id="pfModo" onchange="renderPagamentos()">
+              <option value="">Todos</option>
+              <option value="proporcional">⚖️ Proporcional</option>
+              <option value="evento">📁 Evento</option>
+              <option value="gastos">🧾 Gastos</option>
+            </select>
+          </div>
+          <div><label>🔁 Frequência</label>
+            <select id="pfFreq" onchange="renderPagamentos()">
+              <option value="">Todas</option>
+              <option value="avulso">Avulso</option>
+              <option value="semanal">Semanal</option>
+              <option value="mensal">Mensal</option>
+            </select>
+          </div>
+          <div><label>📅 De</label><input type="date" id="pfDataDe" onchange="renderPagamentos()"></div>
+          <div><label>📅 Até</label><input type="date" id="pfDataAte" onchange="renderPagamentos()"></div>
+        </div>
+        <div class="factions">
+          <button class="btn sec" onclick="limparFiltrosPagamentos()">🧹 Limpar</button>
+          <button class="btn amber" onclick="copiarPagamentosFiltrados()">📋 Copiar</button>
+          <button class="btn" onclick="exportarPagamentosPDF()">📄 PDF</button>
+        </div>
+      </div>
+      <div id="pgResumo" class="note hide"></div>
+      <div id="listaPagamentos"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ACERTO ===================== -->
+  <section id="tab-acerto" class="hide">
+    <div class="card">
+      <h2>🔄 Acerto otimizado</h2>
+      <p class="sub">Quem paga para quem, com o <b>menor número de transferências possível</b>. Considera todos os gastos e os pagamentos já feitos.</p>
+      <div id="acertoFlow"></div>
+      <div class="note" id="acertoResumo"></div>
+    </div>
+    <div class="card">
+      <h2>Comparação</h2>
+      <div id="acertoCompara"></div>
+    </div>
+  </section>
+
+  <!-- ===================== COBRANCAS ===================== -->
+  <section id="tab-cobrancas" class="hide">
+    <div class="card">
+      <h2>📨 Cobrança individual por pessoa</h2>
+      <p class="sub">Extrato de cada amigo: o que ele deve (com datas de vencimento), o que já pagou e o valor final a transferir. Use o botão para enviar a mensagem pronta.</p>
+      <div class="note">💡 A cobrança segue o <b>acerto otimizado</b>: o valor final e o destinatário são calculados para reduzir o número de pagamentos.</div>
+    </div>
+    <div id="listaCobrancas"></div>
+  </section>
+
+  <!-- ===================== DADOS ===================== -->
+  <section id="tab-dados" class="hide">
+    <div class="card">
+      <h2>Backup e restauração</h2>
+      <p class="sub">Seus dados ficam salvos automaticamente neste dispositivo. Faça backup para não perder nada.</p>
+      <div class="row">
+        <button class="btn" onclick="exportar()">⬇️ Baixar backup (.json)</button>
+        <button class="btn sec" onclick="document.getElementById('impFile').click()">⬆️ Restaurar backup</button>
+        <input type="file" id="impFile" accept="application/json" class="hide" onchange="importar(event)">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn sec" onclick="copiarResumo()">📋 Copiar resumo do acerto</button>
+        <button class="btn red" onclick="limparTudo()">🗑️ Apagar tudo</button>
+      </div>
+      <div class="note">💡 Dica p/ tablet: adicione esta página à tela inicial pelo navegador para abrir como um app. Os dados continuam salvos mesmo offline.</div>
+    </div>
+  </section>
+
+  <div class="footer">Acerta Aí • feito para uso pessoal • dados 100% locais no seu dispositivo</div>
+</div>
+
+<script>
+/* ================= Estado ================= */
+const TIPOS = {emprestimo:'Empréstimo',festa:'Festa',evento:'Evento',ingresso:'Ingresso',viagem:'Viagem'};
+let db = {pessoas:[], gastos:[], pagamentos:[]};
+let editPessoaId=null, editGastoId=null, editPagamentoId=null;
+const KEY='acertaai_v1';
+const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const fmt = v => (v<0?'-':'')+'R$ '+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const hoje = ()=> new Date().toISOString().slice(0,10);
+const brData = d => d?d.split('-').reverse().join('/'):'—';
+function diasParaVenc(v){ if(!v) return null; const a=new Date(hoje()+'T00:00:00'); const b=new Date(v+'T00:00:00'); return Math.round((b-a)/86400000); }
+function statusVenc(v){
+  const d=diasParaVenc(v);
+  if(d===null) return {cls:'',rot:''};
+  if(d<0)  return {cls:'venc-vencido', rot:'vencido há '+Math.abs(d)+'d'};
+  if(d===0)return {cls:'venc-hoje',    rot:'vence hoje'};
+  if(d<=7) return {cls:'venc-proximo', rot:'vence em '+d+'d'};
+  return {cls:'venc-futuro', rot:'vence em '+d+'d'};
+}
+
+function load(){ try{const d=JSON.parse(localStorage.getItem(KEY)); if(d) db=d;}catch(e){} }
+function save(){ localStorage.setItem(KEY, JSON.stringify(db)); renderAll(); }
+function nome(id){ const p=db.pessoas.find(x=>x.id===id); return p?p.nome:'—'; }
+
+/* ================= Cálculo de saldos ================= */
+function calcSaldos(){
+  const s={}; db.pessoas.forEach(p=>s[p.id]=0);
+  db.gastos.forEach(g=>{
+    if(s[g.pagou]!==undefined) s[g.pagou]+= g.valor;
+    g.divisao.forEach(d=>{ if(s[d.pessoa]!==undefined) s[d.pessoa]-= d.valor; });
+  });
+  db.pagamentos.forEach(pg=>{
+    if(s[pg.de]!==undefined)   s[pg.de]  += pg.valor;
+    if(s[pg.para]!==undefined) s[pg.para]-= pg.valor;
+  });
+  return s;
+}
+function otimizar(saldos){
+  const cred=[], deb=[];
+  Object.entries(saldos).forEach(([id,v])=>{
+    if(v>0.005) cred.push({id,v});
+    else if(v<-0.005) deb.push({id,v:-v});
+  });
+  cred.sort((a,b)=>b.v-a.v); deb.sort((a,b)=>b.v-a.v);
+  const res=[]; let i=0,j=0;
+  while(i<deb.length && j<cred.length){
+    const pay=Math.min(deb[i].v,cred[j].v);
+    res.push({de:deb[i].id,para:cred[j].id,valor:Math.round(pay*100)/100});
+    deb[i].v-=pay; cred[j].v-=pay;
+    if(deb[i].v<0.005)i++;
+    if(cred[j].v<0.005)j++;
+  }
+  return res;
+}
+function transacoesNaive(saldos){
+  const nCred=Object.values(saldos).filter(v=>v>0.005).length;
+  const nDeb =Object.values(saldos).filter(v=>v<-0.005).length;
+  return nCred*nDeb;
+}
+// chave de evento de um gasto
+function eventoKeyDoGasto(gid){
+  const g=db.gastos.find(x=>x.id===gid);
+  if(!g) return '__avulsos__';
+  return (g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__';
+}
+// quanto uma pessoa consome (deve) por evento, considerando só os gastos
+function consumoPorEvento(id){
+  const m={};
+  db.gastos.forEach(g=>{
+    const parte=g.divisao.find(d=>d.pessoa===id);
+    if(parte&&parte.valor>0.005){ const k=(g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__'; m[k]=(m[k]||0)+parte.valor; }
+  });
+  return m;
+}
+// distribui UM pagamento em um mapa {eventoKey: valor}, conforme o modo escolhido
+function alocacaoPagamento(p){
+  const modo=p.modo||'proporcional';
+  const m={};
+  if(modo==='evento' && p.evento){ m[p.evento]=p.valor; }
+  else if(modo==='gastos' && Array.isArray(p.alloc)){
+    p.alloc.forEach(a=>{ const k=eventoKeyDoGasto(a.gasto); m[k]=(m[k]||0)+(a.valor||0); });
+  }else{ // proporcional
+    const consumo=consumoPorEvento(p.de);
+    const tot=Object.values(consumo).reduce((a,v)=>a+v,0);
+    if(tot>0){ Object.entries(consumo).forEach(([k,v])=>{ m[k]=p.valor*(v/tot); }); }
+    else { m['__avulsos__']=p.valor; }
+  }
+  return m;
+}
+// quanto já foi abatido de uma pessoa em cada evento (soma de todos os pagamentos dela)
+function abatimentoPorEvento(id){
+  const m={};
+  db.pagamentos.filter(p=>p.de===id).forEach(p=>{
+    const al=alocacaoPagamento(p);
+    Object.entries(al).forEach(([k,v])=>{ m[k]=(m[k]||0)+v; });
+  });
+  return m;
+}
+// total que os DEVEDORES consomem num evento (dívida bruta, exclui a parte de quem pagou os gastos)
+// e total já abatido por pagamentos direcionados àquele evento (de todas as pessoas)
+function progressoEvento(eventoKey){
+  let devidoBruto=0;      // soma do que cada pessoa deve, menos o que ela mesma pagou de gastos do evento
+  const gastosEv=db.gastos.filter(g=> ((g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__')===eventoKey );
+  const s={}; db.pessoas.forEach(p=>s[p.id]=0);
+  gastosEv.forEach(g=>{ if(s[g.pagou]!==undefined)s[g.pagou]+=g.valor; g.divisao.forEach(d=>{if(s[d.pessoa]!==undefined)s[d.pessoa]-=d.valor;}); });
+  Object.values(s).forEach(v=>{ if(v<0) devidoBruto+=Math.abs(v); }); // total que os devedores devem no evento
+  // total pago direcionado a este evento
+  let pago=0;
+  db.pagamentos.forEach(p=>{ pago += (alocacaoPagamento(p)[eventoKey]||0); });
+  pago=Math.min(pago,devidoBruto); // não passa de 100%
+  const pct = devidoBruto>0.005 ? Math.round((pago/devidoBruto)*1000)/10 : 100;
+  return {devido:devidoBruto, pago, restante:Math.max(0,devidoBruto-pago), pct};
+}
+// HTML de uma barra de progresso
+function barraProgresso(pago,total,mini){
+  const pct = total>0.005 ? Math.min(100,Math.round((pago/total)*1000)/10) : 100;
+  const full = pct>=99.95 ? ' full':'';
+  return `<div class="prog${mini?' mini':''}${full}"><i style="width:${pct}%"></i><span>${pct.toFixed(0)}% pago</span></div>`;
+}
+// saldos do evento: gastos do evento + pagamentos atribuídos a ele (conforme o modo)
+function calcSaldosEvento(nomeEvento){
+  const s={}; db.pessoas.forEach(p=>s[p.id]=0);
+  db.gastos.filter(g=>(g.evento||'').trim()===nomeEvento).forEach(g=>{
+    if(s[g.pagou]!==undefined) s[g.pagou]+= g.valor;
+    g.divisao.forEach(d=>{ if(s[d.pessoa]!==undefined) s[d.pessoa]-= d.valor; });
+  });
+  // aplica os pagamentos: quem pagou tem a dívida reduzida; quem recebeu tem o crédito reduzido
+  db.pagamentos.forEach(p=>{
+    const val=alocacaoPagamento(p)[nomeEvento]||0;
+    if(val>0.0001){
+      if(s[p.de]!==undefined)   s[p.de]  += val;
+      if(s[p.para]!==undefined) s[p.para]-= val;
+    }
+  });
+  return s;
+}
+
+/* ================= PESSOAS ================= */
+function salvarPessoa(){
+  const n=document.getElementById('pNome').value.trim();
+  const fone=document.getElementById('pFone').value.trim();
+  const pix=document.getElementById('pPix').value.trim();
+  if(!n){alert('Informe o nome.');return;}
+  if(editPessoaId){
+    const p=db.pessoas.find(x=>x.id===editPessoaId);
+    if(p){p.nome=n;p.fone=fone;p.pix=pix;}
+    cancelarPessoa();
+  }else{
+    db.pessoas.push({id:uid(),nome:n,fone,pix});
+    limparFormPessoa();
+  }
+  save();
+}
+function editarPessoa(id){
+  const p=db.pessoas.find(x=>x.id===id); if(!p)return;
+  editPessoaId=id;
+  document.getElementById('pNome').value=p.nome||'';
+  document.getElementById('pFone').value=p.fone||'';
+  document.getElementById('pPix').value=p.pix||'';
+  document.getElementById('tituloPessoa').textContent='Editar pessoa';
+  document.getElementById('btnPessoa').textContent='Salvar alterações';
+  const b=document.getElementById('bannerPessoa'); b.classList.remove('hide'); b.querySelector('span').textContent=p.nome;
+  document.getElementById('cardPessoa').classList.add('editando');
+  irPara('pessoas'); document.getElementById('pNome').focus();
+}
+function cancelarPessoa(){
+  editPessoaId=null; limparFormPessoa();
+  document.getElementById('tituloPessoa').textContent='Adicionar pessoa';
+  document.getElementById('btnPessoa').textContent='Adicionar';
+  document.getElementById('bannerPessoa').classList.add('hide');
+  document.getElementById('cardPessoa').classList.remove('editando');
+}
+function limparFormPessoa(){ ['pNome','pFone','pPix'].forEach(i=>document.getElementById(i).value=''); }
+function delPessoa(id){
+  const usada = db.gastos.some(g=>g.pagou===id||g.divisao.some(d=>d.pessoa===id))
+             || db.pagamentos.some(p=>p.de===id||p.para===id);
+  if(usada && !confirm('Essa pessoa aparece em gastos/pagamentos. Apagar mesmo assim? (os lançamentos dela serão mantidos, mas ficarão como "—")')) return;
+  db.pessoas=db.pessoas.filter(p=>p.id!==id);
+  if(editPessoaId===id) cancelarPessoa();
+  save();
+}
+function foneWhats(f){ if(!f)return''; let d=(''+f).replace(/\D/g,''); if(d.length<=11 && !d.startsWith('55')) d='55'+d; return d; }
+function renderPessoas(){
+  const el=document.getElementById('listaPessoas');
+  if(!db.pessoas.length){el.innerHTML='<div class="empty">Nenhuma pessoa cadastrada ainda.</div>';return;}
+  const s=calcSaldos();
+  let h='<table><tr><th>Nome</th><th class="hide-mob">WhatsApp</th><th class="hide-mob">PIX</th><th>Saldo</th><th></th></tr>';
+  db.pessoas.forEach(p=>{
+    const v=s[p.id]||0;
+    h+=`<tr><td><b>${p.nome}</b></td>
+      <td class="hide-mob" style="color:var(--muted)">${p.fone||'—'}</td>
+      <td class="hide-mob" style="color:var(--muted)">${p.pix||'—'}</td>
+      <td class="${v>=0?'pos':'neg'}"><b>${fmt(v)}</b></td>
+      <td style="white-space:nowrap"><button class="mini edit" onclick="editarPessoa('${p.id}')">✏️ editar</button>
+      <button class="mini red" onclick="delPessoa('${p.id}')">excluir</button></td></tr>`;
+  });
+  el.innerHTML=h+'</table>';
+}
+
+/* ================= EVENTOS (helpers) ================= */
+function listaEventosNomes(){
+  const set=new Set();
+  db.gastos.forEach(g=>{ if(g.evento && g.evento.trim()) set.add(g.evento.trim()); });
+  return [...set].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+}
+function fillEventoSelect(cur){
+  const sel=document.getElementById('gEventoSel'); if(!sel)return;
+  const nomes=listaEventosNomes();
+  sel.innerHTML='<option value="">— Sem evento (avulso) —</option>'
+    +nomes.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join('')
+    +'<option value="__novo__">➕ Criar novo evento...</option>';
+  if(cur!==undefined && cur!==null){
+    if(cur && cur!=='__novo__' && !nomes.includes(cur)){ // evento atual não está na lista (ex.: editando)
+      const o=document.createElement('option'); o.value=cur; o.textContent=cur; sel.insertBefore(o,sel.lastChild);
+    }
+    sel.value=cur||'';
+  }
+  onEventoSel();
+}
+function onEventoSel(){
+  const sel=document.getElementById('gEventoSel');
+  const box=document.getElementById('gEventoNovoBox');
+  if(sel.value==='__novo__'){ box.classList.remove('hide'); }
+  else{ box.classList.add('hide'); document.getElementById('gEventoNovo').value=''; }
+}
+function eventoDoForm(){
+  const sel=document.getElementById('gEventoSel').value;
+  if(sel==='__novo__') return document.getElementById('gEventoNovo').value.trim();
+  return sel;
+}
+
+/* ================= GASTOS ================= */
+function renderPartChips(preSel){
+  const box=document.getElementById('gPart');
+  if(!db.pessoas.length){box.innerHTML='<span style="color:var(--muted)">Cadastre pessoas primeiro.</span>';return;}
+  box.innerHTML=db.pessoas.map(p=>{
+    const ck=preSel&&preSel.includes(p.id)?'checked':'';
+    return `<label class="chip"><input type="checkbox" class="gp" value="${p.id}" ${ck} onchange="recalcSplit()">${p.nome}</label>`;
+  }).join('');
+}
+function marcarTodos(){ document.querySelectorAll('.gp').forEach(c=>c.checked=true); recalcSplit(); }
+function selecionados(){ return [...document.querySelectorAll('.gp:checked')].map(c=>c.value); }
+function recalcSplit(){
+  const modo=document.getElementById('gModo').value;
+  const box=document.getElementById('gSplitBox');
+  const sel=selecionados();
+  const total=parseFloat(document.getElementById('gValor').value)||0;
+  if(modo==='custom' && sel.length){
+    box.classList.remove('hide');
+    const lines=document.getElementById('gSplitLines');
+    const igual=sel.length? (total/sel.length):0;
+    lines.innerHTML=sel.map(id=>{
+      const prev=window._splitCache&&window._splitCache[id];
+      const val=(prev!==undefined)?prev:igual.toFixed(2);
+      return `<div class="split-line"><span>${nome(id)}</span>
+        <input type="number" step="0.01" class="gsval" data-id="${id}" value="${val}" oninput="checkSplitSum()"></div>`;
+    }).join('');
+    checkSplitSum();
+  }else{
+    box.classList.add('hide');
+  }
+}
+function checkSplitSum(){
+  const total=parseFloat(document.getElementById('gValor').value)||0;
+  const soma=[...document.querySelectorAll('.gsval')].reduce((a,i)=>a+(parseFloat(i.value)||0),0);
+  const av=document.getElementById('gSplitAviso');
+  const diff=Math.round((total-soma)*100)/100;
+  if(Math.abs(diff)<0.005){av.style.background='#dcfce7';av.style.borderColor='#86efac';av.style.color='#166534';av.textContent='✔️ Soma confere com o total ('+fmt(total)+').';}
+  else{av.style.background='#fef2f2';av.style.borderColor='#fca5a5';av.style.color='#991b1b';av.textContent='⚠️ Soma dos valores = '+fmt(soma)+'. Faltam '+fmt(diff)+' para bater com o total.';}
+}
+function salvarGasto(){
+  const tipo=document.getElementById('gTipo').value;
+  const desc=document.getElementById('gDesc').value.trim();
+  const data=document.getElementById('gData').value||hoje();
+  const venc=document.getElementById('gVenc').value||'';
+  const evento=eventoDoForm();
+  const valor=parseFloat(document.getElementById('gValor').value)||0;
+  const pagou=document.getElementById('gPagou').value;
+  const modo=document.getElementById('gModo').value;
+  const sel=selecionados();
+  if(!desc){alert('Descreva o gasto.');return;}
+  if(valor<=0){alert('Informe o valor.');return;}
+  if(!pagou){alert('Selecione quem pagou.');return;}
+  if(!sel.length){alert('Marque ao menos um participante.');return;}
+  let divisao=[];
+  if(modo==='igual'){
+    const cada=Math.round((valor/sel.length)*100)/100;
+    let acc=0;
+    sel.forEach((id,idx)=>{ let v=cada; if(idx===sel.length-1) v=Math.round((valor-acc)*100)/100; acc+=v; divisao.push({pessoa:id,valor:v}); });
+  }else{
+    divisao=[...document.querySelectorAll('.gsval')].map(i=>({pessoa:i.dataset.id,valor:parseFloat(i.value)||0}));
+    const soma=divisao.reduce((a,d)=>a+d.valor,0);
+    if(Math.abs(soma-valor)>0.02){ if(!confirm('A soma da divisão ('+fmt(soma)+') é diferente do total ('+fmt(valor)+'). Salvar assim mesmo?')) return; }
+  }
+  if(editGastoId){
+    const g=db.gastos.find(x=>x.id===editGastoId);
+    if(g){g.tipo=tipo;g.desc=desc;g.data=data;g.venc=venc;g.evento=evento;g.valor=valor;g.pagou=pagou;g.divisao=divisao;}
+    cancelarGasto();
+  }else{
+    db.gastos.push({id:uid(),tipo,desc,data,venc,evento,valor,pagou,divisao});
+    limparFormGasto();
+  }
+  save();
+}
+function editarGasto(id){
+  const g=db.gastos.find(x=>x.id===id); if(!g)return;
+  editGastoId=id;
+  document.getElementById('gTipo').value=g.tipo;
+  document.getElementById('gDesc').value=g.desc;
+  document.getElementById('gData').value=g.data||hoje();
+  document.getElementById('gVenc').value=g.venc||'';
+  fillEventoSelect(g.evento||'');
+  document.getElementById('gValor').value=g.valor;
+  fillSelects(); document.getElementById('gPagou').value=g.pagou;
+  // divisão custom?
+  const igual = g.valor && g.divisao.length ? Math.round((g.valor/g.divisao.length)*100)/100 : 0;
+  const ehIgual = g.divisao.every(d=>Math.abs(d.valor-igual)<=0.02);
+  document.getElementById('gModo').value = ehIgual?'igual':'custom';
+  renderPartChips(g.divisao.map(d=>d.pessoa));
+  window._splitCache={}; g.divisao.forEach(d=>window._splitCache[d.pessoa]=d.valor);
+  recalcSplit();
+  document.getElementById('tituloGasto').textContent='Editar gasto';
+  document.getElementById('btnGasto').textContent='Salvar alterações';
+  const b=document.getElementById('bannerGasto'); b.classList.remove('hide'); b.querySelector('span').textContent=g.desc;
+  document.getElementById('cardGasto').classList.add('editando');
+  irPara('gastos'); window.scrollTo(0,0);
+}
+function cancelarGasto(){
+  editGastoId=null; window._splitCache=null; limparFormGasto();
+  document.getElementById('tituloGasto').textContent='Novo gasto / evento';
+  document.getElementById('btnGasto').textContent='Salvar gasto';
+  document.getElementById('bannerGasto').classList.add('hide');
+  document.getElementById('cardGasto').classList.remove('editando');
+}
+function limparFormGasto(){
+  document.getElementById('gDesc').value=''; document.getElementById('gValor').value=''; document.getElementById('gVenc').value='';
+  document.getElementById('gData').value=hoje(); document.getElementById('gModo').value='igual';
+  fillEventoSelect('');
+  document.querySelectorAll('.gp').forEach(c=>c.checked=false); recalcSplit();
+}
+function delGasto(id){ if(confirm('Excluir este gasto?')){db.gastos=db.gastos.filter(g=>g.id!==id); if(editGastoId===id)cancelarGasto(); save();} }
+function fillFiltrosGastos(){
+  const fp=document.getElementById('fPessoa'), fe=document.getElementById('fEvento');
+  if(!fp||!fe)return;
+  const curP=fp.value, curE=fe.value;
+  fp.innerHTML='<option value="">Todas as pessoas</option>'+db.pessoas.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
+  const nomes=listaEventosNomes();
+  const temAvulso=db.gastos.some(g=>!(g.evento&&g.evento.trim()));
+  fe.innerHTML='<option value="">Todos os eventos</option>'
+    +nomes.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join('')
+    +(temAvulso?'<option value="__avulsos__">🧾 Gastos avulsos</option>':'');
+  if([...fp.options].some(o=>o.value===curP)) fp.value=curP;
+  if([...fe.options].some(o=>o.value===curE)) fe.value=curE;
+}
+function limparFiltrosGastos(){
+  document.getElementById('fPessoa').value='';
+  document.getElementById('fPapel').value='qualquer';
+  document.getElementById('fEvento').value='';
+  document.getElementById('fTipo').value='';
+  document.getElementById('fDe').value='';
+  document.getElementById('fAte').value='';
+  renderGastos();
+}
+function lerFiltrosGastos(){
+  const g=id=>document.getElementById(id)?document.getElementById(id).value:'';
+  return {pessoa:g('fPessoa'),papel:g('fPapel')||'qualquer',evento:g('fEvento'),tipo:g('fTipo'),de:g('fDe'),ate:g('fAte')};
+}
+// retorna os gastos que passam pelos filtros atuais (já ordenados por data desc)
+function gastosFiltrados(){
+  const f=lerFiltrosGastos();
+  let lista=db.gastos.filter(g=>{
+    if(f.evento){ const ek=(g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__'; if(ek!==f.evento) return false; }
+    if(f.tipo && g.tipo!==f.tipo) return false;
+    if(f.de && (g.data||'')<f.de) return false;
+    if(f.ate && (g.data||'')>f.ate) return false;
+    if(f.pessoa){
+      const pagou=g.pagou===f.pessoa;
+      const participou=g.divisao.some(d=>d.pessoa===f.pessoa && d.valor>0.005);
+      if(f.papel==='pagou' && !pagou) return false;
+      if(f.papel==='participou' && !participou) return false;
+      if(f.papel==='qualquer' && !(pagou||participou)) return false;
+    }
+    return true;
+  });
+  return lista.sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+}
+function descricaoFiltros(){
+  const f=lerFiltrosGastos();
+  let partes=[];
+  if(f.pessoa){ const rot={qualquer:'pagou ou participou',pagou:'pagou',participou:'participou'}[f.papel]; partes.push(`👤 ${nome(f.pessoa)} (${rot})`); }
+  if(f.evento){ partes.push(`📁 ${f.evento==='__avulsos__'?'Gastos avulsos':f.evento}`); }
+  if(f.tipo){ partes.push(`🏷️ ${TIPOS[f.tipo]}`); }
+  if(f.de||f.ate){ partes.push(`📅 ${f.de?brData(f.de):'início'} até ${f.ate?brData(f.ate):'hoje'}`); }
+  return partes;
+}
+function renderGastos(){
+  fillFiltrosGastos();
+  const el=document.getElementById('listaGastos');
+  const resumo=document.getElementById('filtroResumo');
+  if(!db.gastos.length){el.innerHTML='<div class="empty">Nenhum gasto lançado.</div>'; if(resumo)resumo.classList.add('hide'); return;}
+  const f=lerFiltrosGastos();
+  const fPessoa=f.pessoa;
+  const ord=gastosFiltrados();
+  const partes=descricaoFiltros();
+  const filtrando = partes.length>0;
+  // contador no cabeçalho do painel
+  const cnt=document.getElementById('fContador');
+  if(cnt){ cnt.textContent = filtrando ? (partes.length+' filtro'+(partes.length>1?'s':'')) : 'todos'; cnt.style.color = filtrando?'#fff':'var(--brand2)'; cnt.style.background = filtrando?'var(--brand)':'#fff'; cnt.style.borderColor = filtrando?'var(--brand)':'var(--line)'; }
+  // resumo do filtro
+  if(resumo){
+    if(filtrando){
+      const totalFiltro=ord.reduce((a,g)=>a+g.valor,0);
+      let extra='';
+      if(fPessoa){
+        const somaParte=ord.reduce((a,g)=>{const d=g.divisao.find(x=>x.pessoa===fPessoa);return a+(d?d.valor:0);},0);
+        const somaPagou=ord.filter(g=>g.pagou===fPessoa).reduce((a,g)=>a+g.valor,0);
+        extra=` • Parte de ${nome(fPessoa)}: <b>${fmt(somaParte)}</b> • Pagou: <b>${fmt(somaPagou)}</b>`;
+      }
+      resumo.classList.remove('hide');
+      resumo.innerHTML=`🔎 Filtrando por ${partes.map(p=>`<b>${p}</b>`).join(' + ')} — <b>${ord.length}</b> gasto(s), total <b>${fmt(totalFiltro)}</b>${extra}`;
+    }else{ resumo.classList.add('hide'); }
+  }
+  if(!ord.length){ el.innerHTML='<div class="empty">Nenhum gasto encontrado com esses filtros.</div>'; return; }
+  let h='';
+  ord.forEach(g=>{
+    const parts=g.divisao.map(d=>{
+      const destaque = fPessoa && d.pessoa===fPessoa;
+      return `<span style="${destaque?'color:var(--brand2);font-weight:800':''}">${nome(d.pessoa)} (${fmt(d.valor)})</span>`;
+    }).join(', ');
+    const st=statusVenc(g.venc);
+    const vencBadge = g.venc? `<span class="vencpill ${st.cls}">venc. ${brData(g.venc)} • ${st.rot}</span>`:'';
+    const pagouDestaque = fPessoa && g.pagou===fPessoa;
+    h+=`<div style="border-bottom:1px solid var(--line);padding:10px 0">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="tag ${g.tipo}">${TIPOS[g.tipo]}</span>
+        ${g.evento?`<span class="tag" style="background:#e0e7ff;color:#4338ca">📁 ${g.evento}</span>`:''}
+        <b>${g.desc}</b>
+        <span style="color:var(--muted);font-size:12px">${brData(g.data)}</span>
+        ${vencBadge}
+        <span class="amt" style="margin-left:auto">${fmt(g.valor)}</span>
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Pagou: <b style="color:${pagouDestaque?'var(--brand2)':'var(--ink)'}">${nome(g.pagou)}</b> • Dividido: ${parts}</div>
+      <div style="margin-top:6px"><button class="mini edit" onclick="editarGasto('${g.id}')">✏️ editar</button>
+        <button class="mini red" onclick="delGasto('${g.id}')">excluir</button></div>
+    </div>`;
+  });
+  el.innerHTML=h;
+}
+/* ---- exportação dos gastos filtrados ---- */
+function textoGastosFiltrados(){
+  const ord=gastosFiltrados();
+  const partes=descricaoFiltros();
+  const total=ord.reduce((a,g)=>a+g.valor,0);
+  let t='📄 Acerta Aí — Relatório de gastos\n';
+  t+= partes.length? ('Filtros: '+partes.join(' + ')+'\n') : 'Filtros: todos os gastos\n';
+  t+=`Gerado em ${brData(hoje())}\n\n`;
+  if(!ord.length){ return t+'Nenhum gasto encontrado com esses filtros.'; }
+  ord.forEach(g=>{
+    const ev=g.evento?` [📁 ${g.evento}]`:'';
+    t+=`• ${brData(g.data)} — ${TIPOS[g.tipo]}: ${g.desc}${ev} — ${fmt(g.valor)}\n`;
+    t+=`   Pagou: ${nome(g.pagou)} | Dividido: ${g.divisao.map(d=>nome(d.pessoa)+' '+fmt(d.valor)).join(', ')}\n`;
+    if(g.venc) t+=`   Vencimento: ${brData(g.venc)}\n`;
+  });
+  t+=`\nTotal: ${fmt(total)} em ${ord.length} gasto(s).`;
+  return t;
+}
+function copiarGastosFiltrados(){
+  const txt=textoGastosFiltrados();
+  navigator.clipboard.writeText(txt).then(()=>alert('Relatório de gastos copiado! Cole no WhatsApp/Teams.'))
+  .catch(()=>prompt('Copie o texto:',txt));
+}
+function exportarGastosPDF(){
+  const ord=gastosFiltrados();
+  const partes=descricaoFiltros();
+  const total=ord.reduce((a,g)=>a+g.valor,0);
+  const linhas=ord.map(g=>`<tr>
+    <td>${brData(g.data)}</td>
+    <td><span class="t">${TIPOS[g.tipo]}</span></td>
+    <td>${g.desc}${g.evento?`<div class="ev">📁 ${g.evento}</div>`:''}</td>
+    <td>${nome(g.pagou)}</td>
+    <td class="sm">${g.divisao.map(d=>nome(d.pessoa)+' '+fmt(d.valor)).join('<br>')}</td>
+    <td>${g.venc?brData(g.venc):'—'}</td>
+    <td class="r"><b>${fmt(g.valor)}</b></td></tr>`).join('');
+  const win=window.open('','_blank');
+  if(!win){ alert('Habilite pop-ups para gerar o PDF.'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório de gastos</title>
+    <style>
+      body{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#0f172a;margin:28px}
+      h1{font-size:20px;margin:0 0 2px} .sub{color:#64748b;font-size:12px;margin:0 0 4px}
+      .filtros{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:8px;padding:8px 10px;font-size:12px;margin:10px 0}
+      table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+      th,td{border-bottom:1px solid #e2e8f0;padding:7px 8px;text-align:left;vertical-align:top}
+      th{background:#0f172a;color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+      .r{text-align:right} .sm{font-size:11px;color:#475569} .t{background:#f1f5f9;border-radius:5px;padding:1px 6px;font-size:11px;font-weight:700}
+      .ev{color:#4338ca;font-size:11px;margin-top:2px} tfoot td{border-top:2px solid #0f172a;font-size:14px}
+      .foot{margin-top:16px;color:#94a3b8;font-size:11px;text-align:center}
+      @media print{@page{margin:14mm}}
+    </style></head><body>
+    <h1>💸 Acerta Aí — Relatório de gastos</h1>
+    <p class="sub">Gerado em ${brData(hoje())}</p>
+    <div class="filtros">🔎 ${partes.length?partes.join(' &nbsp;+&nbsp; '):'Todos os gastos'}</div>
+    ${ord.length?`<table>
+      <thead><tr><th>Data</th><th>Tipo</th><th>Descrição</th><th>Pagou</th><th>Divisão</th><th>Vencimento</th><th class="r">Valor</th></tr></thead>
+      <tbody>${linhas}</tbody>
+      <tfoot><tr><td colspan="6" class="r"><b>Total (${ord.length} gasto(s))</b></td><td class="r"><b>${fmt(total)}</b></td></tr></tfoot>
+    </table>`:'<p>Nenhum gasto encontrado com esses filtros.</p>'}
+    <p class="foot">Acerta Aí • relatório gerado localmente no seu dispositivo</p>
+    <script>window.onload=function(){setTimeout(function(){window.print();},300);}<\/script>
+    </body></html>`);
+  win.document.close();
+}
+
+/* ================= PAGAMENTOS ================= */
+const MODO_AJUDA={
+  proporcional:'⚖️ <b>Proporcional:</b> o valor é distribuído entre todos os gastos da pessoa, na proporção de cada um. Abate o saldo geral e cada evento proporcionalmente.',
+  evento:'📁 <b>Por evento:</b> o valor abate somente o evento escolhido. Ideal para fechar uma viagem/festa específica.',
+  gastos:'🧾 <b>Por gastos:</b> você escolhe exatamente quais gastos este pagamento quita, na ordem marcada, até o valor do pagamento.'
+};
+function onPagModo(){
+  const modo=document.getElementById('mModo').value;
+  document.getElementById('mEventoBox').classList.toggle('hide',modo!=='evento');
+  document.getElementById('mGastosBox').classList.toggle('hide',modo!=='gastos');
+  document.getElementById('mModoAjuda').innerHTML=MODO_AJUDA[modo];
+  if(modo==='evento') fillMEvento();
+  if(modo==='gastos') fillMGastos();
+}
+function onPagPessoa(){ // ao trocar quem pagou, recarrega evento/gastos
+  const modo=document.getElementById('mModo').value;
+  if(modo==='evento') fillMEvento();
+  if(modo==='gastos') fillMGastos();
+}
+function onPagValor(){ // ao mudar o valor, revalida a lista de gastos
+  if(document.getElementById('mModo').value==='gastos') checkMGastos();
+}
+function fillMEvento(sel){
+  const de=document.getElementById('mDe').value;
+  const box=document.getElementById('mEvento');
+  // eventos em que a pessoa (pagadora) tem consumo
+  const consumo=de?consumoPorEvento(de):{};
+  const nomes=Object.keys(consumo).filter(k=>k!=='__avulsos__').sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  const temAvulso=consumo['__avulsos__']>0;
+  let opts=nomes.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n} (deve ${fmt(consumo[n])})</option>`).join('');
+  if(temAvulso) opts+=`<option value="__avulsos__">Gastos avulsos (deve ${fmt(consumo['__avulsos__'])})</option>`;
+  box.innerHTML=opts||'<option value="">— sem gastos para esta pessoa —</option>';
+  if(sel!==undefined && sel!==null) box.value=sel;
+}
+function fillMGastos(preAlloc){
+  const de=document.getElementById('mDe').value;
+  const list=document.getElementById('mGastosList');
+  if(!de){ list.innerHTML='<span style="color:var(--muted)">Selecione quem pagou primeiro.</span>'; return; }
+  const gs=db.gastos.filter(g=>g.divisao.some(d=>d.pessoa===de && d.valor>0.005))
+    .sort((a,b)=>(a.venc||'9999').localeCompare(b.venc||'9999'));
+  if(!gs.length){ list.innerHTML='<span style="color:var(--muted)">Esta pessoa não tem gastos.</span>'; return; }
+  list.innerHTML=gs.map(g=>{
+    const parte=g.divisao.find(d=>d.pessoa===de).valor;
+    const ck=preAlloc&&preAlloc.some(a=>a.gasto===g.id)?'checked':'';
+    const ev=g.evento?` 📁${g.evento}`:'';
+    return `<label class="chip"><input type="checkbox" class="mgk" value="${g.id}" data-parte="${parte}" onchange="checkMGastos()" ${ck}>
+      ${g.desc} (${fmt(parte)})<span style="color:var(--muted);font-size:11px">${ev}</span></label>`;
+  }).join('');
+  checkMGastos();
+}
+function checkMGastos(){
+  const valor=parseFloat(document.getElementById('mValor').value)||0;
+  const marc=[...document.querySelectorAll('.mgk:checked')];
+  const somaMarc=marc.reduce((a,c)=>a+parseFloat(c.dataset.parte||0),0);
+  const av=document.getElementById('mGastosAviso');
+  if(!marc.length){ av.style.background='#eff6ff';av.style.color='#1e3a8a';av.innerHTML='Marque os gastos que este pagamento cobre.'; return; }
+  if(valor>0 && Math.abs(valor-somaMarc)>0.02){
+    if(valor<somaMarc){ av.style.background='#fefce8';av.style.borderColor='#fde047';av.style.color='#854d0e';
+      av.innerHTML=`⚠️ Pagamento (${fmt(valor)}) menor que os gastos marcados (${fmt(somaMarc)}). O app abaterá na ordem até acabar o valor, deixando o restante em aberto.`; }
+    else { av.style.background='#fff7ed';av.style.borderColor='#fdba74';av.style.color='#9a3412';
+      av.innerHTML=`ℹ️ Pagamento (${fmt(valor)}) maior que os marcados (${fmt(somaMarc)}). O excedente (${fmt(valor-somaMarc)}) ficará como crédito/abatimento geral.`; }
+  }else{
+    av.style.background='#dcfce7';av.style.borderColor='#86efac';av.style.color='#166534';
+    av.innerHTML=`✔️ Gastos marcados somam ${fmt(somaMarc)}.`;
+  }
+}
+// monta a alocação de "gastos específicos": preenche na ordem marcada até esgotar o valor
+function montarAllocGastos(valor){
+  const marc=[...document.querySelectorAll('.mgk:checked')];
+  let rest=valor; const alloc=[];
+  marc.forEach(c=>{
+    if(rest<=0.001) return;
+    const parte=parseFloat(c.dataset.parte||0);
+    const usa=Math.min(parte,rest);
+    alloc.push({gasto:c.value,valor:Math.round(usa*100)/100});
+    rest-=usa;
+  });
+  return alloc;
+}
+function salvarPagamento(){
+  const de=document.getElementById('mDe').value, para=document.getElementById('mPara').value;
+  const valor=parseFloat(document.getElementById('mValor').value)||0;
+  const data=document.getElementById('mData').value||hoje();
+  const freq=document.getElementById('mFreq').value;
+  const modo=document.getElementById('mModo').value;
+  if(!de||!para){alert('Selecione as pessoas.');return;}
+  if(de===para){alert('Pagador e recebedor devem ser diferentes.');return;}
+  if(valor<=0){alert('Informe o valor.');return;}
+  let evento='', alloc=null;
+  if(modo==='evento'){
+    evento=document.getElementById('mEvento').value;
+    if(!evento){alert('Selecione o evento a abater.');return;}
+  }else if(modo==='gastos'){
+    alloc=montarAllocGastos(valor);
+    if(!alloc.length){alert('Marque ao menos um gasto para abater.');return;}
+  }
+  const reg={id:editPagamentoId||uid(),de,para,valor,data,freq,modo};
+  if(modo==='evento') reg.evento=evento;
+  if(modo==='gastos') reg.alloc=alloc;
+  if(editPagamentoId){
+    const idx=db.pagamentos.findIndex(x=>x.id===editPagamentoId);
+    if(idx>=0) db.pagamentos[idx]=reg;
+    cancelarPagamento();
+  }else{
+    db.pagamentos.push(reg);
+    limparFormPagamento();
+  }
+  save();
+}
+function editarPagamento(id){
+  const p=db.pagamentos.find(x=>x.id===id); if(!p)return;
+  editPagamentoId=id;
+  fillSelects();
+  document.getElementById('mDe').value=p.de;
+  document.getElementById('mPara').value=p.para;
+  document.getElementById('mValor').value=p.valor;
+  document.getElementById('mData').value=p.data||hoje();
+  document.getElementById('mFreq').value=p.freq||'avulso';
+  document.getElementById('mModo').value=p.modo||'proporcional';
+  onPagModo();
+  if((p.modo||'')==='evento') fillMEvento(p.evento||'');
+  if((p.modo||'')==='gastos') fillMGastos(p.alloc||[]);
+  document.getElementById('tituloPagamento').textContent='Editar pagamento';
+  document.getElementById('btnPagamento').textContent='Salvar alterações';
+  document.getElementById('bannerPagamento').classList.remove('hide');
+  document.getElementById('cardPagamento').classList.add('editando');
+  irPara('pagamentos'); window.scrollTo(0,0);
+}
+function limparFormPagamento(){
+  document.getElementById('mValor').value='';
+  document.getElementById('mModo').value='proporcional'; onPagModo();
+}
+function cancelarPagamento(){
+  editPagamentoId=null;
+  limparFormPagamento();
+  document.getElementById('tituloPagamento').textContent='Registrar pagamento recebido';
+  document.getElementById('btnPagamento').textContent='Registrar';
+  document.getElementById('bannerPagamento').classList.add('hide');
+  document.getElementById('cardPagamento').classList.remove('editando');
+}
+function delPagamento(id){ if(confirm('Excluir pagamento?')){db.pagamentos=db.pagamentos.filter(p=>p.id!==id); if(editPagamentoId===id)cancelarPagamento(); save();} }
+const ROT_MODO_PAG={proporcional:'⚖️ Proporcional',evento:'📁 Evento',gastos:'🧾 Gastos'};
+function fillFiltrosPagamentos(){
+  const de=document.getElementById('pfDe'), para=document.getElementById('pfPara');
+  if(!de||!para)return;
+  const cd=de.value, cp=para.value;
+  const opts='<option value="">Todos</option>'+db.pessoas.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
+  de.innerHTML=opts; para.innerHTML=opts;
+  if([...de.options].some(o=>o.value===cd)) de.value=cd;
+  if([...para.options].some(o=>o.value===cp)) para.value=cp;
+}
+function lerFiltrosPagamentos(){
+  const g=id=>document.getElementById(id)?document.getElementById(id).value:'';
+  return {de:g('pfDe'),para:g('pfPara'),modo:g('pfModo'),freq:g('pfFreq'),dataDe:g('pfDataDe'),dataAte:g('pfDataAte')};
+}
+function pagamentosFiltrados(){
+  const f=lerFiltrosPagamentos();
+  return db.pagamentos.filter(p=>{
+    if(f.de && p.de!==f.de) return false;
+    if(f.para && p.para!==f.para) return false;
+    if(f.modo && (p.modo||'proporcional')!==f.modo) return false;
+    if(f.freq && (p.freq||'avulso')!==f.freq) return false;
+    if(f.dataDe && (p.data||'')<f.dataDe) return false;
+    if(f.dataAte && (p.data||'')>f.dataAte) return false;
+    return true;
+  }).sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+}
+function descricaoFiltrosPag(){
+  const f=lerFiltrosPagamentos();
+  let partes=[];
+  if(f.de) partes.push(`👤 ${nome(f.de)} pagou`);
+  if(f.para) partes.push(`🎯 recebeu ${nome(f.para)}`);
+  if(f.modo) partes.push(ROT_MODO_PAG[f.modo]);
+  if(f.freq) partes.push(`🔁 ${f.freq}`);
+  if(f.dataDe||f.dataAte) partes.push(`📅 ${f.dataDe?brData(f.dataDe):'início'} até ${f.dataAte?brData(f.dataAte):'hoje'}`);
+  return partes;
+}
+function limparFiltrosPagamentos(){
+  ['pfDe','pfPara','pfModo','pfFreq','pfDataDe','pfDataAte'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  renderPagamentos();
+}
+function detAbatimento(p){
+  const modo=p.modo||'proporcional';
+  let det=ROT_MODO_PAG[modo];
+  if(modo==='evento') det+=': '+(p.evento==='__avulsos__'?'Avulsos':p.evento);
+  if(modo==='gastos'&&p.alloc) det+=' ('+p.alloc.length+')';
+  return det;
+}
+function renderPagamentos(){
+  fillFiltrosPagamentos();
+  const el=document.getElementById('listaPagamentos');
+  const resumo=document.getElementById('pgResumo');
+  const cnt=document.getElementById('pgContador');
+  if(!db.pagamentos.length){
+    el.innerHTML='<div class="empty">Nenhum pagamento registrado.</div>';
+    if(resumo)resumo.classList.add('hide');
+    if(cnt){cnt.textContent='todos';cnt.style.color='var(--brand2)';cnt.style.background='#fff';cnt.style.borderColor='var(--line)';}
+    return;
+  }
+  const ord=pagamentosFiltrados();
+  const partes=descricaoFiltrosPag();
+  const filtrando=partes.length>0;
+  if(cnt){ cnt.textContent = filtrando ? (partes.length+' filtro'+(partes.length>1?'s':'')) : 'todos'; cnt.style.color = filtrando?'#fff':'var(--brand2)'; cnt.style.background = filtrando?'var(--brand)':'#fff'; cnt.style.borderColor = filtrando?'var(--brand)':'var(--line)'; }
+  if(resumo){
+    if(filtrando){
+      const totalF=ord.reduce((a,p)=>a+p.valor,0);
+      resumo.classList.remove('hide');
+      resumo.innerHTML=`🔎 Filtrando por ${partes.map(p=>`<b>${p}</b>`).join(' + ')} — <b>${ord.length}</b> pagamento(s), total <b>${fmt(totalF)}</b>`;
+    }else{ resumo.classList.add('hide'); }
+  }
+  if(!ord.length){ el.innerHTML='<div class="empty">Nenhum pagamento encontrado com esses filtros.</div>'; return; }
+  let h='<table><tr><th>Data</th><th>De</th><th>Para</th><th class="hide-mob">Abatimento</th><th>Valor</th><th></th></tr>';
+  ord.forEach(p=>{
+    h+=`<tr><td>${brData(p.data)}</td><td><b>${nome(p.de)}</b></td><td>${nome(p.para)}</td>
+      <td class="hide-mob"><span class="tag">${detAbatimento(p)}</span></td><td class="pos"><b>${fmt(p.valor)}</b></td>
+      <td style="white-space:nowrap"><button class="mini edit" onclick="editarPagamento('${p.id}')">✏️</button>
+      <button class="mini red" onclick="delPagamento('${p.id}')">x</button></td></tr>`;
+  });
+  el.innerHTML=h+'</table>';
+}
+/* ---- exportação dos pagamentos filtrados ---- */
+function textoPagamentosFiltrados(){
+  const ord=pagamentosFiltrados();
+  const partes=descricaoFiltrosPag();
+  const total=ord.reduce((a,p)=>a+p.valor,0);
+  let t='📄 Acerta Aí — Histórico de pagamentos\n';
+  t+= partes.length? ('Filtros: '+partes.join(' + ')+'\n') : 'Filtros: todos os pagamentos\n';
+  t+=`Gerado em ${brData(hoje())}\n\n`;
+  if(!ord.length) return t+'Nenhum pagamento encontrado.';
+  ord.forEach(p=>{ t+=`• ${brData(p.data)} — ${nome(p.de)} → ${nome(p.para)} — ${fmt(p.valor)} [${detAbatimento(p)} | ${p.freq||'avulso'}]\n`; });
+  t+=`\nTotal: ${fmt(total)} em ${ord.length} pagamento(s).`;
+  return t;
+}
+function copiarPagamentosFiltrados(){
+  const txt=textoPagamentosFiltrados();
+  navigator.clipboard.writeText(txt).then(()=>alert('Histórico de pagamentos copiado!'))
+  .catch(()=>prompt('Copie o texto:',txt));
+}
+function exportarPagamentosPDF(){
+  const ord=pagamentosFiltrados();
+  const partes=descricaoFiltrosPag();
+  const total=ord.reduce((a,p)=>a+p.valor,0);
+  const linhas=ord.map(p=>`<tr>
+    <td>${brData(p.data)}</td><td>${nome(p.de)}</td><td>${nome(p.para)}</td>
+    <td><span class="t">${detAbatimento(p)}</span></td><td>${p.freq||'avulso'}</td>
+    <td class="r"><b>${fmt(p.valor)}</b></td></tr>`).join('');
+  const win=window.open('','_blank');
+  if(!win){ alert('Habilite pop-ups para gerar o PDF.'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>Histórico de pagamentos</title>
+    <style>
+      body{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#0f172a;margin:28px}
+      h1{font-size:20px;margin:0 0 2px} .sub{color:#64748b;font-size:12px;margin:0 0 4px}
+      .filtros{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:8px;padding:8px 10px;font-size:12px;margin:10px 0}
+      table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+      th,td{border-bottom:1px solid #e2e8f0;padding:7px 8px;text-align:left}
+      th{background:#0f172a;color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+      .r{text-align:right} .t{background:#f1f5f9;border-radius:5px;padding:1px 6px;font-size:11px;font-weight:700}
+      tfoot td{border-top:2px solid #0f172a;font-size:14px}
+      .foot{margin-top:16px;color:#94a3b8;font-size:11px;text-align:center}
+      @media print{@page{margin:14mm}}
+    </style></head><body>
+    <h1>💸 Acerta Aí — Histórico de pagamentos</h1>
+    <p class="sub">Gerado em ${brData(hoje())}</p>
+    <div class="filtros">🔎 ${partes.length?partes.join(' &nbsp;+&nbsp; '):'Todos os pagamentos'}</div>
+    ${ord.length?`<table>
+      <thead><tr><th>Data</th><th>De</th><th>Para</th><th>Abatimento</th><th>Frequência</th><th class="r">Valor</th></tr></thead>
+      <tbody>${linhas}</tbody>
+      <tfoot><tr><td colspan="5" class="r"><b>Total (${ord.length} pagamento(s))</b></td><td class="r"><b>${fmt(total)}</b></td></tr></tfoot>
+    </table>`:'<p>Nenhum pagamento encontrado com esses filtros.</p>'}
+    <p class="foot">Acerta Aí • relatório gerado localmente no seu dispositivo</p>
+    <script>window.onload=function(){setTimeout(function(){window.print();},300);}<\/script>
+    </body></html>`);
+  win.document.close();
+}
+function calcParcela(){
+  const id=document.getElementById('cPessoa').value;
+  const freq=document.getElementById('cFreq').value;
+  const n=parseInt(document.getElementById('cN').value)||0;
+  const valPorParc=parseFloat(document.getElementById('cVal').value)||0;
+  const box=document.getElementById('cResultado');
+  const s=calcSaldos();
+  const saldo=s[id]||0;
+  if(!id){box.textContent='Selecione uma pessoa.';return;}
+  if(saldo>=-0.005){box.style.background='#dcfce7';box.style.borderColor='#86efac';box.style.color='#166534';box.textContent='✔️ '+nome(id)+' não deve nada (saldo '+fmt(saldo)+').';return;}
+  const dev=Math.abs(saldo);
+  const rot=freq==='semanal'?'semana':'mês';
+  box.style.background='#eff6ff';box.style.borderColor='#bfdbfe';box.style.color='#1e3a8a';
+  if(valPorParc>0){
+    const qtd=Math.ceil(dev/valPorParc);
+    const ultima=dev-valPorParc*(qtd-1);
+    box.innerHTML=`<b>${nome(id)}</b> deve <b>${fmt(dev)}</b>.<br>Pagando <b>${fmt(valPorParc)}/${rot}</b> → <b>${qtd}</b> parcela(s)`
+      +(qtd>1?` (última de ${fmt(ultima)}).`:'.');
+  }else if(n>0){
+    const parc=Math.round((dev/n)*100)/100;
+    const ultima=Math.round((dev-parc*(n-1))*100)/100;
+    box.innerHTML=`<b>${nome(id)}</b> deve <b>${fmt(dev)}</b>.<br>Em <b>${n}</b> parcela(s) ${freq} → <b>${fmt(parc)}</b> por ${rot}`
+      +(n>1?` (última de ${fmt(ultima)}).`:'.');
+  }else{ box.textContent='Informe o nº de parcelas ou o valor por parcela.'; }
+}
+
+/* ================= ACERTO ================= */
+function renderAcerto(){
+  const s=calcSaldos();
+  const plano=otimizar(s);
+  const flow=document.getElementById('acertoFlow');
+  if(!plano.length){
+    flow.innerHTML='<div class="empty">🎉 Tudo quitado! Ninguém deve nada a ninguém.</div>';
+    document.getElementById('acertoResumo').classList.add('hide');
+    document.getElementById('acertoCompara').innerHTML='';
+    return;
+  }
+  document.getElementById('acertoResumo').classList.remove('hide');
+  flow.innerHTML=plano.map(t=>{
+    const p=db.pessoas.find(x=>x.id===t.para);
+    const pix=p&&p.pix?`<div style="font-size:12px;color:var(--muted)">PIX: ${p.pix}</div>`:'';
+    return `<div class="flow"><div><div class="who">${nome(t.de)}</div></div>
+      <div class="arrow">→ paga →</div>
+      <div><div class="who">${nome(t.para)}</div>${pix}</div>
+      <div class="amt">${fmt(t.valor)}</div></div>`;
+  }).join('');
+  const total=plano.reduce((a,t)=>a+t.valor,0);
+  document.getElementById('acertoResumo').innerHTML=
+    `✅ São necessárias apenas <b>${plano.length}</b> transferência(s), movimentando <b>${fmt(total)}</b> no total.`;
+  const naive=transacoesNaive(s);
+  const econ=naive-plano.length;
+  document.getElementById('acertoCompara').innerHTML=
+    `<table><tr><th>Cenário</th><th>Transferências</th></tr>
+     <tr><td>Sem otimização (todos acertando entre si)</td><td>até <b>${naive}</b></td></tr>
+     <tr><td>Com acerto otimizado</td><td><b class="pos">${plano.length}</b></td></tr>
+     ${econ>0?`<tr><td>Economia</td><td><b class="pos">${econ} pagamento(s) a menos</b></td></tr>`:''}</table>`;
+}
+function resumoTexto(){
+  const s=calcSaldos(); const plano=otimizar(s);
+  if(!plano.length) return 'Acerta Aí — Tudo quitado! Ninguém deve nada. 🎉';
+  let t='💸 Acerto de contas (otimizado)\n\n';
+  plano.forEach(p=>{
+    const per=db.pessoas.find(x=>x.id===p.para);
+    t+=`• ${nome(p.de)} paga ${fmt(p.valor)} para ${nome(p.para)}`+(per&&per.pix?` (PIX: ${per.pix})`:'')+'\n';
+  });
+  t+=`\nTotal: ${fmt(plano.reduce((a,p)=>a+p.valor,0))} em ${plano.length} transferência(s).`;
+  return t;
+}
+function copiarResumo(){
+  navigator.clipboard.writeText(resumoTexto()).then(()=>alert('Resumo copiado! Cole no WhatsApp/Teams.'))
+  .catch(()=>prompt('Copie o texto:',resumoTexto()));
+}
+
+/* ================= VENCIMENTOS ================= */
+function categoriaVenc(v){ const d=diasParaVenc(v); if(d===null)return''; if(d<0)return'vencido'; if(d===0)return'hoje'; if(d<=7)return'proximo'; return'futuro'; }
+function fillFiltrosVenc(){
+  const pe=document.getElementById('vfPessoa'), ev=document.getElementById('vfEvento');
+  if(!pe||!ev)return;
+  const cp=pe.value, ce=ev.value;
+  pe.innerHTML='<option value="">Todos</option>'+db.pessoas.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
+  const nomes=listaEventosNomes();
+  const temAvulso=db.gastos.some(g=>g.venc && !(g.evento&&g.evento.trim()));
+  ev.innerHTML='<option value="">Todos os eventos</option>'
+    +nomes.map(n=>`<option value="${n.replace(/"/g,'&quot;')}">${n}</option>`).join('')
+    +(temAvulso?'<option value="__avulsos__">🧾 Gastos avulsos</option>':'');
+  if([...pe.options].some(o=>o.value===cp)) pe.value=cp;
+  if([...ev.options].some(o=>o.value===ce)) ev.value=ce;
+}
+function lerFiltrosVenc(){
+  const g=id=>document.getElementById(id)?document.getElementById(id).value:'';
+  return {status:g('vfStatus'),pessoa:g('vfPessoa'),evento:g('vfEvento'),tipo:g('vfTipo'),de:g('vfDe'),ate:g('vfAte')};
+}
+function vencFiltrados(){
+  const f=lerFiltrosVenc();
+  return db.gastos.filter(g=>g.venc).filter(g=>{
+    if(f.status && categoriaVenc(g.venc)!==f.status) return false;
+    if(f.pessoa && g.pagou!==f.pessoa) return false;
+    if(f.evento){ const ek=(g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__'; if(ek!==f.evento) return false; }
+    if(f.tipo && g.tipo!==f.tipo) return false;
+    if(f.de && g.venc<f.de) return false;
+    if(f.ate && g.venc>f.ate) return false;
+    return true;
+  }).sort((a,b)=>a.venc.localeCompare(b.venc));
+}
+function descricaoFiltrosVenc(){
+  const f=lerFiltrosVenc();
+  const rotS={vencido:'🔴 Vencidos',hoje:'🟠 Vence hoje',proximo:'🟡 Em até 7 dias',futuro:'🔵 A vencer'};
+  let partes=[];
+  if(f.status) partes.push(rotS[f.status]);
+  if(f.pessoa) partes.push(`👤 ${nome(f.pessoa)}`);
+  if(f.evento) partes.push(`📁 ${f.evento==='__avulsos__'?'Gastos avulsos':f.evento}`);
+  if(f.tipo) partes.push(`🏷️ ${TIPOS[f.tipo]}`);
+  if(f.de||f.ate) partes.push(`📅 ${f.de?brData(f.de):'início'} até ${f.ate?brData(f.ate):'fim'}`);
+  return partes;
+}
+function limparFiltrosVenc(){
+  ['vfStatus','vfPessoa','vfEvento','vfTipo','vfDe','vfAte'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  renderVenc();
+}
+function renderVenc(){
+  fillFiltrosVenc();
+  const el=document.getElementById('dashVenc');
+  const resumo=document.getElementById('vcResumo');
+  const cnt=document.getElementById('vcContador');
+  const comVenc=db.gastos.filter(g=>g.venc);
+  if(!comVenc.length){
+    el.innerHTML='<div class="empty">Nenhum gasto com data de vencimento. Adicione uma ao lançar um gasto.</div>';
+    if(resumo)resumo.classList.add('hide');
+    if(cnt){cnt.textContent='todos';cnt.style.color='var(--brand2)';cnt.style.background='#fff';cnt.style.borderColor='var(--line)';}
+    return;
+  }
+  const ord=vencFiltrados();
+  const partes=descricaoFiltrosVenc();
+  const filtrando=partes.length>0;
+  if(cnt){ cnt.textContent = filtrando ? (partes.length+' filtro'+(partes.length>1?'s':'')) : 'todos'; cnt.style.color = filtrando?'#fff':'var(--brand2)'; cnt.style.background = filtrando?'var(--brand)':'#fff'; cnt.style.borderColor = filtrando?'var(--brand)':'var(--line)'; }
+  if(resumo){
+    if(filtrando){
+      const totalF=ord.reduce((a,g)=>a+g.valor,0);
+      resumo.classList.remove('hide');
+      resumo.innerHTML=`🔎 Filtrando por ${partes.map(p=>`<b>${p}</b>`).join(' + ')} — <b>${ord.length}</b> cobrança(s), total <b>${fmt(totalF)}</b>`;
+    }else{ resumo.classList.add('hide'); }
+  }
+  // KPIs (baseados nos itens filtrados)
+  const vencidos=ord.filter(g=>diasParaVenc(g.venc)<0);
+  const proximos=ord.filter(g=>{const d=diasParaVenc(g.venc);return d>=0&&d<=7;});
+  const totVencido=vencidos.reduce((a,g)=>a+g.valor,0);
+  const totProx=proximos.reduce((a,g)=>a+g.valor,0);
+  let h='';
+  if(vencidos.length||proximos.length){
+    h+='<div class="kpi" style="margin-bottom:10px">';
+    h+=`<div class="box"><span>Vencido</span><b class="neg">${fmt(totVencido)}</b><span style="font-size:11px">${vencidos.length} cobrança(s)</span></div>`;
+    h+=`<div class="box"><span>Vence em 7 dias</span><b style="color:var(--amber)">${fmt(totProx)}</b><span style="font-size:11px">${proximos.length} cobrança(s)</span></div>`;
+    h+='</div>';
+  }
+  if(!ord.length){ el.innerHTML=h+'<div class="empty">Nenhuma cobrança encontrada com esses filtros.</div>'; return; }
+  h+='<table><tr><th>Vencimento</th><th>Gasto</th><th class="hide-mob">Quem pagou</th><th style="text-align:right">Valor</th><th>Situação</th></tr>';
+  ord.forEach(g=>{ const st=statusVenc(g.venc);
+    h+=`<tr><td><b>${brData(g.venc)}</b></td>
+      <td><span class="tag ${g.tipo}">${TIPOS[g.tipo]}</span> ${g.desc}${g.evento?`<div style="font-size:11px;color:#4338ca">📁 ${g.evento}</div>`:''}</td>
+      <td class="hide-mob">${nome(g.pagou)}</td>
+      <td style="text-align:right"><b>${fmt(g.valor)}</b></td>
+      <td><span class="vencpill ${st.cls}">${st.rot}</span></td></tr>`;
+  });
+  el.innerHTML=h+'</table>';
+}
+function renderAlertaVenc(){
+  const el=document.getElementById('alertaVenc');
+  const comVenc=db.gastos.filter(g=>g.venc);
+  const vencidos=comVenc.filter(g=>diasParaVenc(g.venc)<0);
+  const hojeV=comVenc.filter(g=>diasParaVenc(g.venc)===0);
+  const proximos=comVenc.filter(g=>{const d=diasParaVenc(g.venc);return d>=1&&d<=7;});
+  if(!vencidos.length && !hojeV.length && !proximos.length){ el.classList.add('hide'); el.innerHTML=''; return; }
+  el.classList.remove('hide');
+  const totVencido=vencidos.reduce((a,g)=>a+g.valor,0);
+  let partes=[];
+  if(vencidos.length) partes.push(`🔴 <b>${vencidos.length}</b> vencida(s) — ${fmt(totVencido)}`);
+  if(hojeV.length)    partes.push(`🟠 <b>${hojeV.length}</b> vence(m) hoje`);
+  if(proximos.length) partes.push(`🟡 <b>${proximos.length}</b> em até 7 dias`);
+  el.className='alerta '+(vencidos.length?'alerta-vermelho':(hojeV.length?'alerta-laranja':'alerta-amarelo'));
+  el.innerHTML=`<div>⚠️ ${partes.join(' &nbsp;•&nbsp; ')}</div>
+    <button class="mini" onclick="irPara('dash')">Ver vencimentos</button>`;
+}
+function resumoVencimentosTexto(){
+  const comVenc=db.gastos.filter(g=>g.venc);
+  if(!comVenc.length) return 'Acerta Aí — Nenhum gasto com data de vencimento cadastrada.';
+  const ord=vencFiltrados();
+  const partes=descricaoFiltrosVenc();
+  let t='📅 Resumo de vencimentos\n';
+  if(partes.length) t+='Filtros: '+partes.join(' + ')+'\n';
+  t+='\n';
+  if(!ord.length) return t+'Nenhuma cobrança encontrada com esses filtros.';
+  const vencidos=ord.filter(g=>diasParaVenc(g.venc)<0);
+  const abertos =ord.filter(g=>diasParaVenc(g.venc)>=0);
+  if(vencidos.length){
+    t+='🔴 VENCIDOS:\n';
+    vencidos.forEach(g=>{ t+=`• ${g.desc} — ${fmt(g.valor)} — venceu ${brData(g.venc)} (pagou: ${nome(g.pagou)})\n`; });
+    t+='\n';
+  }
+  if(abertos.length){
+    t+='🟢 A VENCER:\n';
+    abertos.forEach(g=>{ const st=statusVenc(g.venc); t+=`• ${g.desc} — ${fmt(g.valor)} — ${brData(g.venc)} (${st.rot})\n`; });
+    t+='\n';
+  }
+  const totVencido=vencidos.reduce((a,g)=>a+g.valor,0);
+  const totAberto=abertos.reduce((a,g)=>a+g.valor,0);
+  t+=`Total vencido: ${fmt(totVencido)}\nTotal a vencer: ${fmt(totAberto)}`;
+  return t;
+}
+function copiarVencimentos(){
+  const txt=resumoVencimentosTexto();
+  navigator.clipboard.writeText(txt).then(()=>alert('Resumo de vencimentos copiado! Cole no WhatsApp/Teams.'))
+  .catch(()=>prompt('Copie o texto:',txt));
+}
+function exportarVencimentosPDF(){
+  const ord=vencFiltrados();
+  const partes=descricaoFiltrosVenc();
+  const total=ord.reduce((a,g)=>a+g.valor,0);
+  const linhas=ord.map(g=>{ const st=statusVenc(g.venc);
+    return `<tr><td>${brData(g.venc)}</td>
+      <td><span class="t">${TIPOS[g.tipo]}</span> ${g.desc}${g.evento?`<div class="ev">📁 ${g.evento}</div>`:''}</td>
+      <td>${nome(g.pagou)}</td><td>${st.rot}</td>
+      <td class="r"><b>${fmt(g.valor)}</b></td></tr>`; }).join('');
+  const win=window.open('','_blank');
+  if(!win){ alert('Habilite pop-ups para gerar o PDF.'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>Vencimentos</title>
+    <style>
+      body{font-family:system-ui,Segoe UI,Arial,sans-serif;color:#0f172a;margin:28px}
+      h1{font-size:20px;margin:0 0 2px} .sub{color:#64748b;font-size:12px;margin:0 0 4px}
+      .filtros{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:8px;padding:8px 10px;font-size:12px;margin:10px 0}
+      table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+      th,td{border-bottom:1px solid #e2e8f0;padding:7px 8px;text-align:left;vertical-align:top}
+      th{background:#0f172a;color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+      .r{text-align:right} .t{background:#f1f5f9;border-radius:5px;padding:1px 6px;font-size:11px;font-weight:700}
+      .ev{color:#4338ca;font-size:11px;margin-top:2px} tfoot td{border-top:2px solid #0f172a;font-size:14px}
+      .foot{margin-top:16px;color:#94a3b8;font-size:11px;text-align:center}
+      @media print{@page{margin:14mm}}
+    </style></head><body>
+    <h1>💸 Acerta Aí — Vencimentos</h1>
+    <p class="sub">Gerado em ${brData(hoje())}</p>
+    <div class="filtros">🔎 ${partes.length?partes.join(' &nbsp;+&nbsp; '):'Todas as cobranças com vencimento'}</div>
+    ${ord.length?`<table>
+      <thead><tr><th>Vencimento</th><th>Gasto</th><th>Quem pagou</th><th>Situação</th><th class="r">Valor</th></tr></thead>
+      <tbody>${linhas}</tbody>
+      <tfoot><tr><td colspan="4" class="r"><b>Total (${ord.length} cobrança(s))</b></td><td class="r"><b>${fmt(total)}</b></td></tr></tfoot>
+    </table>`:'<p>Nenhuma cobrança encontrada com esses filtros.</p>'}
+    <p class="foot">Acerta Aí • relatório gerado localmente no seu dispositivo</p>
+    <script>window.onload=function(){setTimeout(function(){window.print();},300);}<\/script>
+    </body></html>`);
+  win.document.close();
+}
+function irPara(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const btn=document.querySelector('.tab[data-tab="'+tab+'"]'); if(btn)btn.classList.add('active');
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hide'));
+  document.getElementById('tab-'+tab).classList.remove('hide');
+}
+
+/* ================= COBRANCA INDIVIDUAL ================= */
+function itensPessoa(id){
+  const arr=[];
+  db.gastos.forEach(g=>{
+    const parte=g.divisao.find(d=>d.pessoa===id);
+    if(parte && parte.valor>0.005) arr.push({desc:g.desc,tipo:g.tipo,valor:parte.valor,venc:g.venc||'',pagou:g.pagou,evento:(g.evento||'').trim()});
+  });
+  return arr.sort((a,b)=>(a.venc||'9999').localeCompare(b.venc||'9999'));
+}
+// agrupa os itens de uma pessoa por evento (mantém "Avulsos" para itens sem evento)
+function itensPessoaPorEvento(id){
+  const itens=itensPessoa(id);
+  const grupos={};
+  itens.forEach(it=>{ const k=it.evento||'__avulsos__'; (grupos[k]=grupos[k]||[]).push(it); });
+  const nomeados=Object.keys(grupos).filter(k=>k!=='__avulsos__').sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  const ordem=nomeados.concat(grupos['__avulsos__']?['__avulsos__']:[]);
+  return ordem.map(k=>({evento:k, avulso:k==='__avulsos__', itens:grupos[k], subtotal:grupos[k].reduce((a,i)=>a+i.valor,0)}));
+}
+function destinosPessoa(id){ return otimizar(calcSaldos()).filter(t=>t.de===id); }
+function mensagemCobranca(id){
+  const s=calcSaldos(); const saldo=s[id]||0;
+  const itens=itensPessoa(id);
+  const pagou=db.pagamentos.filter(p=>p.de===id).reduce((a,p)=>a+p.valor,0);
+  const grupos=itensPessoaPorEvento(id);
+  let t=`Oi, ${nome(id)}! 👋\nSegue seu acerto:\n\n`;
+  if(itens.length){
+    grupos.forEach(gr=>{
+      t+=(gr.avulso?'🧾 Gastos avulsos:':`📁 ${gr.evento}:`)+'\n';
+      gr.itens.forEach(it=>{
+        const v=it.venc?` — venc. ${brData(it.venc)}${diasParaVenc(it.venc)<0?' (vencido)':''}`:'';
+        t+=`• ${it.desc} — ${fmt(it.valor)}${v}\n`;
+      });
+      t+=`Subtotal: ${fmt(gr.subtotal)}\n\n`;
+    });
+    const totItens=itens.reduce((a,i)=>a+i.valor,0);
+    t+=`Total dos gastos: ${fmt(totItens)}\n`;
+  }
+  if(pagou>0.005) t+=`Já pago: ${fmt(pagou)}\n`;
+  t+='\n';
+  if(saldo<-0.005){
+    const dest=destinosPessoa(id);
+    t+=`💰 Total a pagar: ${fmt(Math.abs(saldo))}\n`;
+    if(dest.length){
+      t+='Transferir para:\n';
+      dest.forEach(d=>{ const per=db.pessoas.find(x=>x.id===d.para);
+        t+=`• ${nome(d.para)} — ${fmt(d.valor)}`+(per&&per.pix?` (PIX: ${per.pix})`:'')+'\n'; });
+    }
+  }else if(saldo>0.005){
+    t+=`✅ Você não deve nada — na verdade tem ${fmt(saldo)} a receber. Valeu! 🙌`;
+  }else{
+    t+='✅ Você está quitado. Obrigado! 🙌';
+  }
+  return t.trim();
+}
+function copiarCobranca(id){
+  const txt=mensagemCobranca(id);
+  navigator.clipboard.writeText(txt).then(()=>alert('Cobrança de '+nome(id)+' copiada!'))
+  .catch(()=>prompt('Copie o texto:',txt));
+}
+function whatsCobranca(id){
+  const p=db.pessoas.find(x=>x.id===id);
+  const num=foneWhats(p&&p.fone);
+  const txt=encodeURIComponent(mensagemCobranca(id));
+  const url = num ? `https://wa.me/${num}?text=${txt}` : `https://wa.me/?text=${txt}`;
+  if(!num) alert('Sem telefone cadastrado para '+nome(id)+'. Vou abrir o WhatsApp com a mensagem pronta para você escolher o contato.');
+  window.open(url,'_blank');
+}
+function renderCobrancas(){
+  const el=document.getElementById('listaCobrancas');
+  if(!db.pessoas.length){el.innerHTML='<div class="card"><div class="empty">Cadastre pessoas para gerar as cobranças.</div></div>';return;}
+  const s=calcSaldos();
+  const ord=[...db.pessoas].sort((a,b)=>(s[a.id]||0)-(s[b.id]||0));
+  let h='';
+  ord.forEach(p=>{
+    const saldo=s[p.id]||0;
+    const itens=itensPessoa(p.id);
+    const pagou=db.pagamentos.filter(x=>x.de===p.id).reduce((a,x)=>a+x.valor,0);
+    const dest=destinosPessoa(p.id);
+    let statusPill;
+    if(saldo<-0.005){ statusPill='<span class="vencpill venc-vencido">Deve '+fmt(Math.abs(saldo))+'</span>'; }
+    else if(saldo>0.005){ statusPill='<span class="vencpill venc-futuro">A receber '+fmt(saldo)+'</span>'; }
+    else { statusPill='<span class="vencpill venc-proximo">Quite</span>'; }
+    let corpo='';
+    if(itens.length){
+      const grupos=itensPessoaPorEvento(p.id);
+      const abat=abatimentoPorEvento(p.id);
+      corpo+='<table>';
+      grupos.forEach(gr=>{
+        const evKey=gr.avulso?'__avulsos__':gr.evento;
+        const jaAbatido=abat[evKey]||0;
+        const restante=gr.subtotal-jaAbatido;
+        const infoAbat = jaAbatido>0.005
+          ? `<span style="font-size:11px;color:var(--green);margin-left:6px">− ${fmt(jaAbatido)} pago</span>`
+          : '';
+        corpo+=`<tr><td colspan="3" style="background:#f8fafc;border-top:2px solid var(--line)">
+          ${gr.avulso?'🧾 <b>Gastos avulsos</b>':`📁 <b>${gr.evento}</b>`}
+          <span class="tag" style="margin-left:6px">${gr.itens.length} item(ns)</span>${infoAbat}
+          <span style="float:right;color:${restante>0.005?'var(--brand2)':'var(--green)'}"><b>${jaAbatido>0.005?fmt(restante)+' restante':fmt(gr.subtotal)}</b></span></td></tr>`;
+        if(jaAbatido>0.005){
+          corpo+=`<tr><td colspan="3" style="padding-top:0">${barraProgresso(jaAbatido,gr.subtotal,true)}</td></tr>`;
+        }
+        gr.itens.forEach(it=>{ const st=statusVenc(it.venc);
+          corpo+=`<tr><td><span class="tag ${it.tipo}">${TIPOS[it.tipo]}</span> ${it.desc}</td>
+            <td>${it.venc?`${brData(it.venc)} <span class="vencpill ${st.cls}">${st.rot}</span>`:'—'}</td>
+            <td style="text-align:right"><b>${fmt(it.valor)}</b></td></tr>`; });
+      });
+      corpo+='</table>';
+    }else{ corpo+='<div class="empty">Sem gastos lançados para esta pessoa.</div>'; }
+    let linhaFinal='';
+    if(saldo<-0.005 && dest.length){
+      linhaFinal='<div class="note">💰 <b>Pagar '+fmt(Math.abs(saldo))+'</b> → '+
+        dest.map(d=>{const per=db.pessoas.find(x=>x.id===d.para);return nome(d.para)+' ('+fmt(d.valor)+')'+(per&&per.pix?' • PIX: '+per.pix:'');}).join(', ')+'</div>';
+    }
+    if(pagou>0.005) linhaFinal='<div style="font-size:13px;color:var(--muted);margin-top:6px">Já pago: <b class="pos">'+fmt(pagou)+'</b></div>'+linhaFinal;
+    h+=`<div class="card">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <h2 style="margin:0">${p.nome}</h2>${statusPill}
+        ${p.fone?`<span class="tag" style="color:var(--muted)">📱 ${p.fone}</span>`:''}
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="btn whats" style="padding:8px 12px" onclick="whatsCobranca('${p.id}')">🟢 WhatsApp</button>
+          <button class="btn amber" style="padding:8px 12px" onclick="copiarCobranca('${p.id}')">📋 Copiar</button>
+        </div>
+      </div>
+      ${corpo}${linhaFinal}
+    </div>`;
+  });
+  el.innerHTML=h;
+}
+
+/* ================= DASHBOARD ================= */
+function renderDash(){
+  const s=calcSaldos();
+  const receber=Object.values(s).filter(v=>v>0).reduce((a,v)=>a+v,0);
+  const dever=Object.values(s).filter(v=>v<0).reduce((a,v)=>a+Math.abs(v),0);
+  const totalGasto=db.gastos.reduce((a,g)=>a+g.valor,0);
+  const totalPago=db.pagamentos.reduce((a,p)=>a+p.valor,0);
+  document.getElementById('kpis').innerHTML=
+    `<div class="box"><span>Total em circulação</span><b>${fmt(totalGasto)}</b></div>
+     <div class="box"><span>Já pago/acertado</span><b class="pos">${fmt(totalPago)}</b></div>
+     <div class="box"><span>A receber (aberto)</span><b class="pos">${fmt(receber)}</b></div>
+     <div class="box"><span>A pagar (aberto)</span><b class="neg">${fmt(dever)}</b></div>`;
+  const ds=document.getElementById('dashSaldos');
+  if(!db.pessoas.length){ds.innerHTML='<div class="empty">Cadastre pessoas para ver os saldos.</div>';}
+  else{
+    const ord=[...db.pessoas].sort((a,b)=>(s[b.id]||0)-(s[a.id]||0));
+    ds.innerHTML='<table><tr><th>Pessoa</th><th>Situação</th><th style="text-align:right">Saldo</th></tr>'+
+      ord.map(p=>{const v=s[p.id]||0;const st=v>0.005?'a receber':(v<-0.005?'deve':'quite');
+        return `<tr><td><b>${p.nome}</b></td><td><span class="tag ${v>0.005?'ingresso':(v<-0.005?'festa':'')}">${st}</span></td>
+        <td style="text-align:right" class="${v>=0?'pos':'neg'}"><b>${fmt(v)}</b></td></tr>`;}).join('')+'</table>';
+  }
+  renderVenc();
+  renderDonut();
+  const porTipo={}; db.gastos.forEach(g=>porTipo[g.tipo]=(porTipo[g.tipo]||0)+g.valor);
+  const dt=document.getElementById('dashTipos');
+  const keys=Object.keys(porTipo);
+  if(!keys.length){dt.innerHTML='<div class="empty">Sem gastos ainda.</div>';}
+  else{
+    dt.innerHTML='<table><tr><th>Tipo</th><th style="text-align:right">Total</th></tr>'+
+      keys.map(k=>`<tr><td><span class="tag ${k}">${TIPOS[k]}</span></td><td style="text-align:right"><b>${fmt(porTipo[k])}</b></td></tr>`).join('')+'</table>';
+  }
+}
+
+function renderDonut(){
+  const el=document.getElementById('dashDonut');
+  // total devido e pago somando todos os eventos (inclui avulsos)
+  const grupos={}; db.gastos.forEach(g=>{ const k=(g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__'; grupos[k]=1; });
+  let devido=0,pago=0;
+  Object.keys(grupos).forEach(k=>{ const pr=progressoEvento(k); devido+=pr.devido; pago+=pr.pago; });
+  const aberto=Math.max(0,devido-pago);
+  if(devido<0.005){ el.innerHTML='<div class="empty">Sem valores a acertar ainda.</div>'; return; }
+  const pct=Math.round((pago/devido)*1000)/10;
+  const GREEN='#16a34a', OPEN='#e2e8f0';
+  const deg=pct*3.6;
+  const donut=`<div class="donutwrap">
+    <div style="width:100%;height:100%;border-radius:50%;background:conic-gradient(${GREEN} ${deg}deg, ${OPEN} ${deg}deg 360deg)"></div>
+    <div style="position:absolute;inset:18px;background:#fff;border-radius:50%"></div>
+    <div class="center"><b>${pct.toFixed(0)}%</b><span>pago</span></div>
+  </div>`;
+  const leg=`<div class="donutleg">
+    <div class="li"><span class="dot" style="background:${GREEN}"></span>Pago: ${fmt(pago)}</div>
+    <div class="li"><span class="dot" style="background:${OPEN}"></span>Em aberto: ${fmt(aberto)}</div>
+    <div class="li" style="color:var(--muted);font-weight:600;font-size:13px">Total devido: ${fmt(devido)}</div>
+  </div>`;
+  el.innerHTML=donut+leg;
+}
+
+/* ================= EVENTOS (render) ================= */
+function renderEventos(){
+  const el=document.getElementById('listaEventos');
+  const kpi=document.getElementById('eventosKpi');
+  // agrupa por evento; gastos sem evento vão para "Avulsos"
+  const grupos={};
+  db.gastos.forEach(g=>{ const k=(g.evento&&g.evento.trim())?g.evento.trim():'__avulsos__'; (grupos[k]=grupos[k]||[]).push(g); });
+  const chaves=Object.keys(grupos);
+  const nomeados=chaves.filter(k=>k!=='__avulsos__').sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  const ordem=nomeados.concat(grupos['__avulsos__']?['__avulsos__']:[]);
+  // KPIs
+  const totalGeral=db.gastos.reduce((a,g)=>a+g.valor,0);
+  // progresso global (todos os eventos + avulsos)
+  let gDevido=0,gPago=0;
+  chaves.forEach(k=>{ const pr=progressoEvento(k); gDevido+=pr.devido; gPago+=pr.pago; });
+  const gPct = gDevido>0.005 ? Math.round((gPago/gDevido)*1000)/10 : 100;
+  kpi.innerHTML=`<div class="box"><span>Eventos cadastrados</span><b>${nomeados.length}</b></div>
+    <div class="box"><span>Gastos agrupados</span><b>${db.gastos.length}</b></div>
+    <div class="box"><span>Total geral</span><b>${fmt(totalGeral)}</b></div>
+    <div class="box" style="flex:2;min-width:220px"><span>Progresso geral de pagamento</span>
+      ${barraProgresso(gPago,gDevido)}
+      <div class="proglegend"><span class="pg">✅ ${fmt(gPago)}</span><span class="pr">${gPct>=99.95?'🎉 Tudo pago':'⏳ Falta '+fmt(Math.max(0,gDevido-gPago))}</span></div>
+    </div>`;
+  if(!db.gastos.length){ el.innerHTML='<div class="card"><div class="empty">Nenhum gasto lançado ainda.</div></div>'; return; }
+  let h='';
+  ordem.forEach(k=>{
+    const gs=grupos[k];
+    const avulso = k==='__avulsos__';
+    const nomeEvento = avulso? 'Gastos avulsos (sem evento)' : k;
+    const total=gs.reduce((a,g)=>a+g.valor,0);
+    // soma por pessoa dentro do evento (quanto cada um deve)
+    const porPessoa={};
+    gs.forEach(g=>g.divisao.forEach(d=>{ porPessoa[d.pessoa]=(porPessoa[d.pessoa]||0)+d.valor; }));
+    // quem pagou dentro do evento
+    const porPagador={};
+    gs.forEach(g=>{ porPagador[g.pagou]=(porPagador[g.pagou]||0)+g.valor; });
+    // datas / vencimentos
+    const vencs=gs.filter(g=>g.venc).map(g=>g.venc).sort();
+    const proxVenc=vencs.length?vencs[0]:'';
+    const stV=proxVenc?statusVenc(proxVenc):null;
+
+    let linhasGastos=gs.sort((a,b)=>(a.data||'').localeCompare(b.data||'')).map(g=>{
+      const st=statusVenc(g.venc);
+      return `<tr><td><span class="tag ${g.tipo}">${TIPOS[g.tipo]}</span> ${g.desc}</td>
+        <td class="hide-mob">${nome(g.pagou)}</td>
+        <td class="hide-mob">${g.venc?`${brData(g.venc)} <span class="vencpill ${st.cls}">${st.rot}</span>`:'—'}</td>
+        <td style="text-align:right"><b>${fmt(g.valor)}</b></td>
+        <td style="white-space:nowrap"><button class="mini edit" onclick="editarGasto('${g.id}')">✏️</button></td></tr>`;
+    }).join('');
+
+    const chipsPagador=Object.entries(porPagador).map(([id,v])=>`<span class="chip">💳 ${nome(id)}: <b>${fmt(v)}</b></span>`).join('');
+    const chipsPessoa=Object.entries(porPessoa).sort((a,b)=>b[1]-a[1]).map(([id,v])=>`<span class="chip">👤 ${nome(id)}: <b>${fmt(v)}</b></span>`).join('');
+
+    // acerto otimizado SÓ deste evento (apenas para eventos nomeados)
+    let blocoAcerto='';
+    if(!avulso){
+      const plano=otimizar(calcSaldosEvento(k));
+      if(plano.length){
+        const linhas=plano.map(tr=>{ const per=db.pessoas.find(x=>x.id===tr.para);
+          return `<div class="flow" style="padding:8px 10px"><div class="who">${nome(tr.de)}</div>
+            <div class="arrow">→ paga →</div>
+            <div><div class="who">${nome(tr.para)}</div>${per&&per.pix?`<div style="font-size:11px;color:var(--muted)">PIX: ${per.pix}</div>`:''}</div>
+            <div class="amt">${fmt(tr.valor)}</div></div>`;}).join('');
+        blocoAcerto=`<details style="margin-top:10px"><summary>🔄 Fechar as contas deste evento (${plano.length} transferência(s))</summary>
+          <div class="note" style="margin-top:8px">💡 Acerto isolado do evento — considera só os gastos de "<b>${nomeEvento}</b>", sem misturar com os outros.</div>
+          ${linhas}
+          <div style="margin-top:6px"><button class="btn amber" style="padding:8px 12px" onclick="copiarAcertoEvento('${k.replace(/'/g,"\\'")}')">📋 Copiar acerto do evento</button></div>
+        </details>`;
+      }else{
+        blocoAcerto=`<div class="note" style="margin-top:10px">✅ Este evento já está equilibrado (ninguém deve dentro dele).</div>`;
+      }
+    }
+
+    // progresso de pagamento do evento (quanto os devedores já quitaram)
+    const prog=progressoEvento(k);
+    const quitado = prog.devido>0.005 && prog.pct>=99.95; // teve dívida e foi 100% pago
+    let blocoProg='';
+    if(prog.devido>0.005){
+      blocoProg=`<div style="margin:4px 0 12px">
+        ${barraProgresso(prog.pago,prog.devido)}
+        <div class="proglegend"><span class="pg">✅ Pago: ${fmt(prog.pago)}</span>
+          <span class="${quitado?'pg':'pr'}">${quitado?'🎉 Quitado!':'⏳ Falta: '+fmt(prog.restante)}</span></div>
+      </div>`;
+    }else if(!avulso){
+      blocoProg=`<div class="note" style="margin:4px 0 12px">✅ Ninguém deve neste evento (todos que participaram também pagaram).</div>`;
+    }
+
+    h+=`<div class="card${quitado?' quitado':''}">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <h2 style="margin:0">${avulso?'🧾':'📁'} ${nomeEvento}</h2>
+        ${quitado?'<span class="selo">✔️ Evento quitado</span>':''}
+        <span class="tag">${gs.length} gasto(s)</span>
+        ${proxVenc&&!avulso&&!quitado?`<span class="vencpill ${stV.cls}">próx. venc. ${brData(proxVenc)} • ${stV.rot}</span>`:''}
+        <span class="amt" style="margin-left:auto">${fmt(total)}</span>
+        ${!avulso?`<button class="btn amber" style="padding:8px 12px" onclick="copiarEvento('${k.replace(/'/g,"\\'")}')">📋 Copiar</button>`:''}
+      </div>
+      ${blocoProg}
+      <table>
+        <tr><th>Gasto</th><th class="hide-mob">Pagou</th><th class="hide-mob">Vencimento</th><th style="text-align:right">Valor</th><th></th></tr>
+        ${linhasGastos}
+        <tr><td colspan="3" style="text-align:right;border-top:2px solid var(--line)"><b>Subtotal do evento</b></td>
+            <td style="text-align:right;border-top:2px solid var(--line)"><b class="amt">${fmt(total)}</b></td><td style="border-top:2px solid var(--line)"></td></tr>
+      </table>
+      <div style="margin-top:10px"><label style="margin:0 0 6px">Quem pagou neste evento</label><div class="chips">${chipsPagador||'<span style="color:var(--muted)">—</span>'}</div></div>
+      <div style="margin-top:10px"><label style="margin:0 0 6px">Quanto cada um consumiu (deve) neste evento</label><div class="chips">${chipsPessoa||'<span style="color:var(--muted)">—</span>'}</div></div>
+      ${blocoAcerto}
+    </div>`;
+  });
+  el.innerHTML=h;
+}
+function copiarEvento(nomeEvento){
+  const gs=db.gastos.filter(g=>(g.evento||'').trim()===nomeEvento);
+  if(!gs.length)return;
+  const total=gs.reduce((a,g)=>a+g.valor,0);
+  let t=`📁 ${nomeEvento}\n\n🧾 Gastos:\n`;
+  gs.sort((a,b)=>(a.data||'').localeCompare(b.data||'')).forEach(g=>{
+    t+=`• ${g.desc} — ${fmt(g.valor)} (pagou: ${nome(g.pagou)}${g.venc?`, venc. ${brData(g.venc)}`:''})\n`;
+  });
+  const porPessoa={}; gs.forEach(g=>g.divisao.forEach(d=>porPessoa[d.pessoa]=(porPessoa[d.pessoa]||0)+d.valor));
+  t+=`\n👤 Quanto cada um deve:\n`;
+  Object.entries(porPessoa).sort((a,b)=>b[1]-a[1]).forEach(([id,v])=>{ t+=`• ${nome(id)}: ${fmt(v)}\n`; });
+  t+=`\nTotal do evento: ${fmt(total)}`;
+  navigator.clipboard.writeText(t).then(()=>alert('Resumo do evento "'+nomeEvento+'" copiado!'))
+  .catch(()=>prompt('Copie o texto:',t));
+}
+function copiarAcertoEvento(nomeEvento){
+  const plano=otimizar(calcSaldosEvento(nomeEvento));
+  if(!plano.length){ alert('Este evento já está equilibrado.'); return; }
+  let t=`🔄 Acerto do evento: ${nomeEvento}\n\n`;
+  plano.forEach(p=>{ const per=db.pessoas.find(x=>x.id===p.para);
+    t+=`• ${nome(p.de)} paga ${fmt(p.valor)} para ${nome(p.para)}`+(per&&per.pix?` (PIX: ${per.pix})`:'')+'\n'; });
+  t+=`\nTotal: ${fmt(plano.reduce((a,p)=>a+p.valor,0))} em ${plano.length} transferência(s).`;
+  navigator.clipboard.writeText(t).then(()=>alert('Acerto do evento "'+nomeEvento+'" copiado!'))
+  .catch(()=>prompt('Copie o texto:',t));
+}
+
+/* ================= Selects ================= */
+function fillSelects(){
+  const opts='<option value="">—</option>'+db.pessoas.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
+  ['gPagou','mDe','mPara','cPessoa'].forEach(id=>{
+    const el=document.getElementById(id); const cur=el.value;
+    el.innerHTML=opts; if([...el.options].some(o=>o.value===cur)) el.value=cur;
+  });
+}
+
+/* ================= Backup ================= */
+function exportar(){
+  const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='acerta-ai-backup-'+hoje()+'.json'; a.click();
+}
+function importar(e){
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{ try{const d=JSON.parse(r.result);
+    if(d.pessoas&&d.gastos&&d.pagamentos){db=d;save();alert('Backup restaurado!');}
+    else alert('Arquivo inválido.');}catch(err){alert('Erro ao ler o arquivo.');} };
+  r.readAsText(f); e.target.value='';
+}
+function limparTudo(){ if(confirm('Apagar TODOS os dados? Essa ação não pode ser desfeita.')){db={pessoas:[],gastos:[],pagamentos:[]};save();} }
+
+/* ================= Render / Tabs ================= */
+function renderAll(){ renderPessoas(); if(!editGastoId){renderPartChips(); fillEventoSelect(document.getElementById('gEventoSel')?document.getElementById('gEventoSel').value:'');} renderGastos(); renderEventos(); renderPagamentos(); renderAcerto(); renderDash(); renderAlertaVenc(); renderCobrancas(); fillSelects(); calcParcela(); }
+document.getElementById('tabs').addEventListener('click',e=>{
+  if(!e.target.classList.contains('tab'))return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  document.querySelectorAll('section').forEach(s=>s.classList.add('hide'));
+  document.getElementById('tab-'+e.target.dataset.tab).classList.remove('hide');
+});
+
+/* init */
+document.getElementById('gData').value=hoje();
+document.getElementById('mData').value=hoje();
+load(); renderAll(); onPagModo();
+</script>
+</body>
+</html>
